@@ -1,0 +1,6 @@
+API:
+Heroku Trainer API: https://heroku-test-api-rasmus.herokuapp.com/ 
+API_KEY: Qbhkk91GuMAKk0jjhiXpV4yaJF4dpsZOyYNSAq1MdN3VMBoCf1bwBPfiZHVLoG8M
+Usage: https://github.com/dewald-els/noroff-assignment-api/blob/master/docs/pokemon-trainer.md
+
+Pokemon API: https://pokeapi.co/api/v2/
