@@ -8,18 +8,27 @@ import { Trainer } from "../models/trainer.model";
 //Service for fetching trainers
 export class TrainesService {
 
-    private trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
-    private error: string = '';
+    //Setting props to private beacuse of security
+    private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
+    private _error: string = '';
     constructor(private readonly http: HttpClient) {
     }
      
     public fetchTrainers(): void {
         this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
         .subscribe((trainers: Trainer[]) => {
-            this.trainers = trainers;
+            this._trainers = trainers;
         }, (error: HttpErrorResponse) => {
-            this.error = error.message;
+            this._error = error.message;
         }); 
+    }
+
+    public trainers(): Trainer[] {
+        return this._trainers;
+    }
+
+    public error(): string {
+        return this._error;
     }
 
 }
