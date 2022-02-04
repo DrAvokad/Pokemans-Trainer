@@ -15,16 +15,15 @@ export class LandingPageComponent {
     //This method runs once when component is rendered
     ngOnInit(): void {
 
-        // this.trainersService.fetchTrainers();
-        this.trainersService.createUser();
     }
 
-    
+    onLoginSubmit(): void {
+        //Check if users exists
+        //Save user locally
+        //Redirect to catalogue page
+    }    
 
-    // //This method runs several times beacuse of fetching
-    // get trainers(): Trainer[] {
-    //     return this.trainersService.trainers()
-    // }
+    
    
 
    
