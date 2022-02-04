@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Trainer } from '../models/trainer.model';
+import { Router } from '@angular/router';
 import { TrainesService } from '../services/trainers.service';
 
 @Component({
@@ -9,9 +9,11 @@ import { TrainesService } from '../services/trainers.service';
     styleUrls: ['./landing-page.component.css'],
 })
 
-export class LandingPageComponent implements OnInit{
-    //Using trainers service to fetch data
-    constructor() {
+export class LandingPageComponent implements OnInit {
+    //Using trainers service to fetch data by instantiating constructor.
+    constructor(
+        private router: Router,
+        private trainerSerivce: TrainesService) {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
@@ -19,15 +21,19 @@ export class LandingPageComponent implements OnInit{
     }
 
     onLoginSubmit(form: NgForm): void {
-        console.log(form.value);
-        
+      
         //Check if users exists
+
         //Save user locally
+        const { username } = form.value;
+        this.trainerSerivce.username = username; 
+        this.router.navigateByUrl("/catalogue")
+
         //Redirect to catalogue page
-    }    
+    }
 
-    
-   
 
-   
+
+
+
 }
