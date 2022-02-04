@@ -8,17 +8,24 @@ import { TrainesService } from '../services/trainers.service';
     styleUrls: ['./landing-page.component.css'],
 })
 
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent {
     //Using trainers service to fetch data
     constructor(private readonly trainersService: TrainesService) {
     }
+    //This method runs once when component is rendered
     ngOnInit(): void {
-        this.trainersService.fetchTrainers();
-    }
-    get trainers(): Trainer[] {
-        return this.trainersService.trainers()
-    }
 
+        // this.trainersService.fetchTrainers();
+        this.trainersService.createUser();
+    }
 
     
+
+    // //This method runs several times beacuse of fetching
+    // get trainers(): Trainer[] {
+    //     return this.trainersService.trainers()
+    // }
+   
+
+   
 }

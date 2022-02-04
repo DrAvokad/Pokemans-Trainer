@@ -5,7 +5,11 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes = [
-  { path: '', component: LandingPageComponent },
+  {
+    path: '', 
+    component: LandingPageComponent,
+    pathMatch: 'full' //Safe practice for displaying the first path
+  },
   { path: 'trainer', component: TrainerPageComponent },
   { path: 'catalogue', component: CataloguePageComponent },
 ];
@@ -14,4 +18,4 @@ const routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

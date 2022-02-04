@@ -23,8 +23,35 @@ export class TrainesService {
         }); 
     }
 
+
+    public signInUser(): void {
+        this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
+        .subscribe((trainers: Trainer[]) => {
+            this._trainers = trainers;
+            //Searching for username in api
+            for (const trainer of this._trainers) {
+                if("ash" === trainer.username)
+                {
+                    console.log("Logging in");
+                }
+                else
+                {
+                    let username = "Aldin"
+                    this.createUser();
+                }
+            }
+        })
+    }
+
+
+    public createUser(): void {
+       
+    }
+
+    //This method runs several times
     public trainers(): Trainer[] {
         return this._trainers;
+        
     }
 
     public error(): string {
