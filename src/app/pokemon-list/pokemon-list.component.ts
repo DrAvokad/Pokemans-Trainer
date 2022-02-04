@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ListItemDecorator } from '../models/list-item-decorator.model';
+import { Pokemon } from '../models/pokemon.model';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -7,12 +8,19 @@ import { ListItemDecorator } from '../models/list-item-decorator.model';
   styleUrls: ['./pokemon-list.component.css']
 })
 export class PokemonListComponent implements OnInit {
+  @Input() pokemonsList: Pokemon[];
 
-  constructor() { }
+  pokemons: ListItemDecorator[];
 
-  pokemons: ListItemDecorator[] = [{"pokemonName":"Charcoalmon", "decoratorType":"Catalogue"}, {"pokemonName":"Cucumbermon", "decoratorType":"Catalogue"},
-  {"pokemonName":"Saltshakermon", "decoratorType":"Trainer"}]
+  constructor() { 
+    this.pokemonsList = [];
+    this.pokemons = [];
+  }
+
   ngOnInit(): void {
+    for(let pokemon of this.pokemonsList){
+      this.pokemons.push({"pokemon": pokemon, "decoratorType":"Catalogue"})
+    }
   }
 
 }
