@@ -1,0 +1,4 @@
+<p>Name of pokemon is {{listDecorator.pokemon.name}}</p>
+<img [src]="listDecorator.pokemon.image">
+<app-pokemon-catalogue [collected]="listDecorator.pokemon.collected" *ngIf="catalogue"></app-pokemon-catalogue>
+<app-pokemon-trainer *ngIf="trainer"></app-pokemon-trainer>
