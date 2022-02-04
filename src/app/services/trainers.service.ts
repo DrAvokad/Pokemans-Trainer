@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Trainer } from "../models/trainer.model";
 
+const USER_KEY = "trainer-username"
 @Injectable({
     providedIn: 'root'
 })
@@ -9,11 +10,21 @@ import { Trainer } from "../models/trainer.model";
 export class TrainesService {
 
     //Setting props to private beacuse of security
+    private _username: string = "";
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
     constructor(private readonly http: HttpClient) {
     }
      
+    get username(): string {
+        return this._username;
+    }
+
+    set username(username: string) {
+        sessionStorage.setItem(USER_KEY, username)
+        this._username = username;
+    }
+
     public fetchTrainers(): void {
         this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
         .subscribe((trainers: Trainer[]) => {

@@ -1,10 +1,29 @@
 <main>
     <h1>Landing page</h1>
-    <form>
+    <form #loginForm="ngForm" (ngSubmit)="onLoginSubmit(loginForm)">
         <fieldset>
-            <label for="usernmae">Username</label>
-            <input type="text" placeholder="Enter your username" />
+            <label for="username">Username</label>
+            <input type="text"
+            ngModel
+            #username="ngModel" 
+            name="username"
+            placeholder="Enter your username" 
+            minlength="3"
+            required/>
         </fieldset>
-        <button type="submit">Start</button>
+
+        <div id="usernameErrors" 
+        *ngIf="username.invalid && (username.touched || username.dirty)">
+        <!-- If there are some errors with user inputs -->
+        <div *ngIf="username.errors">
+            <p *ngIf="username.errors['required']">Username is required!</p>
+            <p *ngIf="username.errors['minlength']">Username is too short!</p>
+        </div>
+        
+        </div>
+
+        <button 
+        [disabled]="loginForm.invalid"
+        type="submit">Start</button>
     </form>
 </main>
