@@ -1,9 +1,13 @@
 <main>
     <h1>Landing page</h1>
-    <form>
+    <form #loginForm="ngForm" (ngSubmit)="onLoginSubmit(loginForm)">
         <fieldset>
             <label for="usernmae">Username</label>
-            <input type="text" placeholder="Enter your username" />
+            <input type="text"
+            ngModel
+            #username="ngModel" 
+            name="username"
+            placeholder="Enter your username" />
         </fieldset>
         <button type="submit">Start</button>
     </form>

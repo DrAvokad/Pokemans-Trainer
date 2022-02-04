@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Trainer } from '../models/trainer.model';
 import { TrainesService } from '../services/trainers.service';
 
@@ -8,16 +9,18 @@ import { TrainesService } from '../services/trainers.service';
     styleUrls: ['./landing-page.component.css'],
 })
 
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit{
     //Using trainers service to fetch data
-    constructor(private readonly trainersService: TrainesService) {
+    constructor() {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
 
     }
 
-    onLoginSubmit(): void {
+    onLoginSubmit(form: NgForm): void {
+        console.log(form.value);
+        
         //Check if users exists
         //Save user locally
         //Redirect to catalogue page
