@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ListItemDecorator } from '../models/list-item-decorator.model';
 
 @Component({
   selector: 'app-pokemon-list-item',
@@ -6,11 +7,21 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./pokemon-list-item.component.css']
 })
 export class PokemonListItemComponent implements OnInit {
-  @Input() pokemonName: String | undefined;
+  @Input() listDecorator: ListItemDecorator;
 
-  constructor() { }
+  catalogue: Boolean = false
+  trainer: Boolean = false
+
+  constructor() {
+    this.listDecorator = {"pokemonName":"Errormon", "decoratorType":"Catalogue"}
+   }
 
   ngOnInit(): void {
+    if(this.listDecorator.decoratorType === "Catalogue"){
+      this.catalogue = true;
+    }else if(this.listDecorator.decoratorType === "Trainer"){
+      this.trainer = true;
+    }
   }
 
 }

@@ -8,6 +8,8 @@ import { CataloguePageComponent } from './catalogue-page/catalogue-page.componen
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { PokemonListItemComponent } from './pokemon-list-item/pokemon-list-item.component';
+import { PokemonTrainerComponent } from './pokemon-trainer/pokemon-trainer.component';
+import { PokemonCatalogueComponent } from './pokemon-catalogue/pokemon-catalogue.component';
 
 
 @NgModule({
@@ -15,7 +17,7 @@ import { PokemonListItemComponent } from './pokemon-list-item/pokemon-list-item.
     AppComponent,
     TrainerPageComponent,
     CataloguePageComponent, 
-    LandingPageComponent, PokemonListComponent, PokemonListItemComponent
+    LandingPageComponent, PokemonListComponent, PokemonListItemComponent, PokemonTrainerComponent, PokemonCatalogueComponent
   ],
   imports: [
     BrowserModule,
