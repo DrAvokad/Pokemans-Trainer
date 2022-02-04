@@ -15,28 +15,13 @@ VT323 - https://fonts.google.com/specimen/VT323 -->
     <div class="collection-box">
       <h3>Collection</h3>
       <ul class="pokemon-list">
-        <li class="pokemon-item">
-        <div class="flex">
-          <img class="pokemon-img" src="../assets/saltshakermon.png">
-          <span>Saltshakermon</span>
-        </div>
-          <button class="btn">Release pankakemon</button>
-        </li>
-        <li class="pokemon-item">
+        <li class="pokemon-item" *ngFor="let pokemon of user.pokemon">
           <div class="flex">
-            <img class="pokemon-img" src="../assets/saltshakermon.png">
-            <span>Saltshakermon</span>
+            <img class="pokemon-img" src={{pokemon.image}} />
+            <span>{{pokemon.name}}</span>
           </div>
-            <button class="btn">Release pankakemon</button>
-          </li>
-          <li class="pokemon-item">
-            <div class="flex">
-              <img class="pokemon-img" src="../assets/saltshakermon.png">
-              <span>Saltshakermon</span>
-            </div>
-              <button class="btn">Release pankakemon</button>
-            </li>
-        
+          <button class="btn" (click)="handleRemovePokemon(pokemon.name)">Release pankakemon</button>
+        </li>
       </ul>
     </div>
   </div>
