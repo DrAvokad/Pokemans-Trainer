@@ -15,20 +15,20 @@ export interface PokemonDetails {
     {
       base_stat: number,
       stat: {
-        name: string
+        name: "hp"
       }
     },
     {
       base_stat: number,
       stat: {
-        name: string
+        name: "attack"
       }
     },
     {
       base_stat: number,
       stat: {
-        name: string
+        name: "defense"
       }
-    },
+    }
   ]
 }
