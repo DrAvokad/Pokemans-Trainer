@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+/* COLORS:
+Red: #EC3B3B 
+BLUE: #3F78F9 
+WHITE: #F9F9FC 
+BLACK: #151313
+
+FONTS:
+Press Start 2P - https://fonts.google.com/specimen/Press+Start+2P 
+VT323 - https://fonts.google.com/specimen/VT323 */
+h3{
+  margin-left: 15px;
+}
+section{
+  width: 80%;
+  margin: 0 auto;
+  text-shadow: 1px 1px #dd6d6d;
+}
+#username{
+  font-family: 'Press Start 2P';
+  
+}
+.collection-box{
+  background-color: #fff;
+  box-shadow: 0 0 5px 0 gray;
+  padding: 20px;
+  font-family: 'VT323';
+}
+.pokemon-list{
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.flex{
+  display: flex;
+  align-items: center;
+}
+.pokemon-item{
+  margin: 5px 0;  
+  width: 200px;
+}
+.pokemon-img{
+  margin: 10px 10px;
+  width: 80px;
+}
+.pokemon-item span{
+  font-size: 1.2rem;
+}
+.btn{
+  display: block;
+  margin: 0 auto;
+  padding: 6px 12px;
+  background-color: #dd6d6d;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 0 5px 0 gray;
+}
+h3{
+  font-size: 1.5rem;
+}
