@@ -7,8 +7,13 @@
             ngModel
             #username="ngModel" 
             name="username"
-            placeholder="Enter your username" />
+            placeholder="Enter your username" 
+            minlength="3"
+            required/>
         </fieldset>
-        <button type="submit">Start</button>
+        <button 
+        [disabled]="loginForm.invalid"
+        type="submit">Start</button>
+        <pre>{{loginForm.valid}}</pre>
     </form>
 </main>
