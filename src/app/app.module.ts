@@ -17,7 +17,11 @@ import { PokemonCatalogueComponent } from './pokemon-catalogue/pokemon-catalogue
     AppComponent,
     TrainerPageComponent,
     CataloguePageComponent, 
-    LandingPageComponent, PokemonListComponent, PokemonListItemComponent, PokemonTrainerComponent, PokemonCatalogueComponent
+    LandingPageComponent, 
+    PokemonListComponent, 
+    PokemonListItemComponent, 
+    PokemonTrainerComponent, 
+    PokemonCatalogueComponent
   ],
   imports: [
     BrowserModule,
