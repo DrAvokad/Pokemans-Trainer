@@ -14,7 +14,7 @@ export class PokemonListItemComponent implements OnInit {
   trainer: Boolean = false
 
   constructor() {
-    this.listDecorator = {"pokemon":{"id":0,"name":"Errormon","image":"500"}, "decoratorType":"Catalogue"}
+    this.listDecorator = {"pokemon":{"id":0,"name":"Errormon","image":"500","collected":false}, "decoratorType":"Catalogue"}
    }
 
   ngOnInit(): void {
