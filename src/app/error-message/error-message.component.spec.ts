@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PokemonTrainerComponent } from './pokemon-trainer.component';
+import { ErrorMessageComponent } from './error-message.component';
 
-describe('PokemonTrainerComponent', () => {
-  let component: PokemonTrainerComponent;
-  let fixture: ComponentFixture<PokemonTrainerComponent>;
+describe('ErrorMessageComponent', () => {
+  let component: ErrorMessageComponent;
+  let fixture: ComponentFixture<ErrorMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PokemonTrainerComponent ]
+      declarations: [ ErrorMessageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PokemonTrainerComponent);
+    fixture = TestBed.createComponent(ErrorMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

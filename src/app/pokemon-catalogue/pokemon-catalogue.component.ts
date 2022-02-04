@@ -6,10 +6,14 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./pokemon-catalogue.component.css']
 })
 export class PokemonCatalogueComponent implements OnInit {
+  @Input() collected: boolean;
+  collectedImg: String = "../../assets/pokball.png"
 
-  constructor() { }
+  constructor() { 
+    this.collected = false
+  }
 
-  collected: Boolean = false
+  
 
   ngOnInit(): void {
   }

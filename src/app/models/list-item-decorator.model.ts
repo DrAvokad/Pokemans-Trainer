@@ -1,4 +1,6 @@
+import { Pokemon } from "./pokemon.model";
+
 export interface ListItemDecorator {
-    pokemonName: string;
+    pokemon: Pokemon;
     decoratorType: "Trainer" | "Catalogue";
 }

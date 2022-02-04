@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ListItemDecorator } from '../models/list-item-decorator.model';
 
+
 @Component({
   selector: 'app-pokemon-list-item',
   templateUrl: './pokemon-list-item.component.html',
@@ -13,7 +14,7 @@ export class PokemonListItemComponent implements OnInit {
   trainer: Boolean = false
 
   constructor() {
-    this.listDecorator = {"pokemonName":"Errormon", "decoratorType":"Catalogue"}
+    this.listDecorator = {"pokemon":{"id":0,"name":"Errormon","image":"500","collected":false}, "decoratorType":"Catalogue"}
    }
 
   ngOnInit(): void {
