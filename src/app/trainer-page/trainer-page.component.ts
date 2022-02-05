@@ -28,7 +28,7 @@ export class TrainerPageComponent implements OnInit {
   ngOnInit(): void {
     // fetch user
     this.pokemonService.apiGetPokemonDetails(1)
-    this.pokemonService.apiGetPokemon(1);
+    this.pokemonService.apiGetPokemon(5);
     this.pokemonService.apiGetPokemons(0, 20)
   }
 
