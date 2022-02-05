@@ -19,13 +19,15 @@ export class PokemonService {
 
   public pokemons: Pokemon[] | null = null;
 
-  // API requests
+  // Return pokemon details response based on the PokemonDetail model
   getPokemonDetails(id: number): Observable<PokemonDetails> {
     const response = this.http
       .get<PokemonDetails>(`${POKEMON_API}pokemon/${id}`)
       .pipe(catchError(this.handleError<any>('getPokemonDetails ', [])));
     return response;
   }
+
+  // Return pokemon response based on id
   getPokemon(id: number): Observable<Pokemon> {
     const response = this.http
       .get<Pokemon>(`${POKEMON_API}pokemon/${id}`)
@@ -33,6 +35,8 @@ export class PokemonService {
     return response;
   }
 
+  // Return response of pokemons with offset (pokemon id to start from) 
+  // and limit (number of pokemons to fetch)
   getPokemons(offset: number, limit: number) {
     const response = this.http
       .get<PokemonList>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
@@ -61,15 +65,17 @@ export class PokemonService {
     // .pipe(catchError(this.handleError<any>('getPokemons', [])));
   }
 
-  getListOfPokemons(offset: number, limit: number) {
-    this.getPokemons(offset, limit)
-    return this.pokemons
-  }
+  // getListOfPokemons(offset: number, limit: number) {
+  //   this.getPokemons(offset, limit)
+  //   return this.pokemons
+  // }
 
+  // Log to message service
   private log(message: string) {
     this.messageService.message = `PokemonService: ${message}`;
   }
 
+  // Log errors to message service
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
