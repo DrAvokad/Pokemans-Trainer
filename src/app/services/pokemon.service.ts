@@ -61,22 +61,21 @@ export class PokemonService {
       });
   }
   apiGetPokemons(offset: number, limit: number): void {
-    this.http.get<PokemonList>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
+    this._pokemons = []
+    this.http.get<Pokemon[]>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
     .pipe(catchError(this.handleError<any>('getPokemons', [])))
     .subscribe({
       next: (response) => {
-        this._pokemons = []
         for (let i = 0; i < limit; i++) {
-          this.http
-            .get<Pokemon>(`${POKEMON_API}pokemon/${response.results[i].name}`)
-            .subscribe({
-              next: (pokemon) => {
-                this.pokemons?.push(pokemon);
-              },
-              error: (error) => {
-                console.log(error);
-              }
-            });
+          let _id = offset + i + 1;
+          let _imageurl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${_id}.png`;
+          let pokemon = {
+            id: _id,
+            name: response.results[i].name,
+            image: _imageurl,
+            collected: false
+          }
+          this.pokemons?.push(pokemon)
         }
       },
       error: (error) => {
