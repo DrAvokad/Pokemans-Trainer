@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { POKEMONS } from '../mock-pokemans';
 
 @Component({
@@ -7,11 +8,11 @@ import { POKEMONS } from '../mock-pokemans';
   styleUrls: ['./trainer-page.component.css']
 })
 export class TrainerPageComponent implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
 
   pokemons = POKEMONS
 
   ngOnInit(): void {
-
+    // Fetch user
   }
 }

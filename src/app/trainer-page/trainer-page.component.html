@@ -1,6 +1,9 @@
 <section>
   <h1>Trainer Page</h1>
+  <div class="flex">
   <h2 id="username">Username</h2>
+  <button [routerLink]="['/catalogue']" class="ml-30">Go to catalogue</button>
+</div>
   <div class="collection-box">
   <app-pokemon-list [pokemonsList]="pokemons" [decoratorType]="'Trainer'"></app-pokemon-list>
 </div>
