@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { USER } from '../mock-user';
-import { Pokemon } from '../models/pokemon.model';
+import { POKEMONS } from '../mock-pokemans';
 
 @Component({
   selector: 'app-trainer-page',
@@ -9,14 +8,10 @@ import { Pokemon } from '../models/pokemon.model';
 })
 export class TrainerPageComponent implements OnInit {
   constructor() {}
-  user = USER
+
+  pokemons = POKEMONS
 
   ngOnInit(): void {
 
   }
-
-  handleRemovePokemon(pokemon: string) {
-    console.log("Removed pokemon: ", pokemon)
-  }
-
 }

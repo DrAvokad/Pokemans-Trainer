@@ -9,17 +9,19 @@ import { Pokemon } from '../models/pokemon.model';
 })
 export class PokemonListComponent implements OnInit {
   @Input() pokemonsList: Pokemon[];
+  @Input() decoratorType: "Trainer" | "Catalogue";
 
   pokemons: ListItemDecorator[];
 
   constructor() { 
     this.pokemonsList = [];
     this.pokemons = [];
+    this.decoratorType = "Catalogue"
   }
 
   ngOnInit(): void {
     for(let pokemon of this.pokemonsList){
-      this.pokemons.push({"pokemon": pokemon, "decoratorType":"Catalogue"})
+      this.pokemons.push({"pokemon": pokemon, "decoratorType":this.decoratorType})
     }
   }
 

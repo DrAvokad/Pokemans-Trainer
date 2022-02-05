@@ -1,28 +1,7 @@
-<!-- COLORS:
-Red: #EC3B3B 
-BLUE: #3F78F9 
-WHITE: #F9F9FC 
-BLACK: #151313
-
-FONTS:
-Press Start 2P - https://fonts.google.com/specimen/Press+Start+2P 
-VT323 - https://fonts.google.com/specimen/VT323 -->
-
 <section>
   <h1>Trainer Page</h1>
   <h2 id="username">Username</h2>
-  <div>
-    <div class="collection-box">
-      <h3>Collection</h3>
-      <ul class="pokemon-list">
-        <li class="pokemon-item" *ngFor="let pokemon of user.pokemon">
-          <div class="flex">
-            <img class="pokemon-img" src={{pokemon.image}} />
-            <span>{{pokemon.name}}</span>
-          </div>
-          <button class="btn" (click)="handleRemovePokemon(pokemon.name)">Release pankakemon</button>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <div class="collection-box">
+  <app-pokemon-list [pokemonsList]="pokemons" [decoratorType]="'Trainer'"></app-pokemon-list>
+</div>
 </section>
