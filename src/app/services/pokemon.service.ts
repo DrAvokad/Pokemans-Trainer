@@ -17,58 +17,73 @@ export class PokemonService {
     private messageService: MessageService
   ) {}
 
-  public pokemons: Pokemon[] | null = null;
+  private _pokemon: Pokemon = { id: 0, name: '', image: '', collected: false };
+  private _pokemons: Pokemon[] = [];
+  private _details: PokemonDetails = {
+    abilities: [{ ability: { name: '' } }, { ability: { name: '' } }],
+    stats: [
+      { base_stat: 0, stat: { name: 'hp' } },
+      { base_stat: 0, stat: { name: 'attack' } },
+      { base_stat: 0, stat: { name: 'defense' } },
+    ],
+  };
 
-  // Return pokemon details response based on the PokemonDetail model
-  getPokemonDetails(id: number): Observable<PokemonDetails> {
-    const response = this.http
+  // Getters
+  get details(): PokemonDetails {
+    return this._details;
+  }
+  get pokemon(): Pokemon {
+    return this._pokemon;
+  }
+  get pokemons(): Pokemon[] {
+    return this._pokemons;
+  }
+
+  // API requests
+  apiGetPokemonDetails(id: number): void {
+    this.http
       .get<PokemonDetails>(`${POKEMON_API}pokemon/${id}`)
-      .pipe(catchError(this.handleError<any>('getPokemonDetails ', [])));
-    return response;
+      .pipe(catchError(this.handleError<any>('getPokemonDetails ', [])))
+      .subscribe({  
+        next: (response: any) => {
+          this._details = response
+        }
+      });
   }
-
-  // Return pokemon response based on id
-  getPokemon(id: number): Observable<Pokemon> {
-    const response = this.http
+  apiGetPokemon(id: number): void {
+    this.http
       .get<Pokemon>(`${POKEMON_API}pokemon/${id}`)
-      .pipe(catchError(this.handleError<any>('getPokemon', [])));
-    return response;
+      .pipe(catchError(this.handleError<any>('getPokemon', [])))
+      .subscribe({  
+        next: (response: any) => {
+          this._pokemon = response
+        }
+      });
   }
-
-  // Return response of pokemons with offset (pokemon id to start from) 
-  // and limit (number of pokemons to fetch)
-  getPokemons(offset: number, limit: number) {
-    const response = this.http
-      .get<PokemonList>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
-      // .subscribe({
-      //   next: (response) => {
-           return response
-      //     this.pokemons = []
-      //     for (let i = 0; i < limit; i++) {
-      //       const pokemon = this.http
-      //         .get<Pokemon>(`${POKEMON_API}pokemon/${response.results[i].name}`)
-      //         .subscribe({
-      //           next: (pokemon) => {
-      //             this.pokemons?.push(pokemon);
-      //           },
-      //           error: (error) => {
-      //             console.log(error);
-      //           }
-      //         });
-      //     }
-      //   },
-      //   error: (error) => {
-      //     console.log(error);
-      //   },
-      // });
-
-    // .pipe(catchError(this.handleError<any>('getPokemons', [])));
+  apiGetPokemons(offset: number, limit: number): void {
+    this.http.get<PokemonList>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
+    .pipe(catchError(this.handleError<any>('getPokemons', [])))
+    .subscribe({
+      next: (response) => {
+        this._pokemons = []
+        for (let i = 0; i < limit; i++) {
+          this.http
+            .get<Pokemon>(`${POKEMON_API}pokemon/${response.results[i].name}`)
+            .subscribe({
+              next: (pokemon) => {
+                this.pokemons?.push(pokemon);
+              },
+              error: (error) => {
+                console.log(error);
+              }
+            });
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
-
-  // getListOfPokemons(offset: number, limit: number) {
-  //   this.getPokemons(offset, limit)
-  //   return this.pokemons
-  // }
 
   // Log to message service
   private log(message: string) {
