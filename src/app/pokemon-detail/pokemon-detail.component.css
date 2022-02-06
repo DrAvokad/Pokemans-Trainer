@@ -1,6 +1,8 @@
 .info-box {
+  background-color: white;
   box-shadow: 0 0 5px 0 gray;
   width: 200px;
+  padding-bottom: 5px;
 }
 .flex{
   display: flex;
@@ -8,5 +10,6 @@
   align-items: center;
 }
 h4{
-  text-align: center;
+  font-size: 1.2rem;
+  margin: 5px 0 5px -15px;
 }
