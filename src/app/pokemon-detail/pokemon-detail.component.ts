@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonService } from '../pokemon.service';
+import { PokemonService } from '../services/pokemon.service';
 import { Pokemon } from '../models/pokemon.model';
 import { PokemonDetails } from '../models/pokemon-details.model';
-import { POKEMON_IMG_API, POKEMON_API } from '../resources';
-import { PokemonList } from '../models/pokemonList.model';
-import { ThisReceiver } from '@angular/compiler';
-import { HttpClient } from '@angular/common/http';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -13,64 +10,29 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./pokemon-detail.component.css'],
 })
 export class PokemonDetailComponent implements OnInit {
-  constructor(private pokemonService: PokemonService,
-    private http: HttpClient) {}
+  @Input() pokemon: Pokemon;
 
-  public pokemonDetails: PokemonDetails | null = null;
-  public pokemon: Pokemon | null = null;
-  public pokemons: Pokemon[] | null = null;
+  constructor(private pokemonService: PokemonService) {
+    this.pokemon = {id: 1, name: "", image:"", collected: false}
+  }
+
+  text = "Show more"
+  btnToggle = false
+
+  get details(): PokemonDetails {
+    return this.pokemonService.details;
+  }
 
   ngOnInit(): void {
-    this.getPokemon(1)
-  } 
+  }
 
-  handleLoadDetails(id: number) {
-    this.getPokemonDetails(id);
-    this.getPokemons(20, 20)
-  }
-  getPokemons(offset: number, limit: number) {
-    this.pokemonService.getPokemons(offset, limit)
-       .subscribe({
-        next: (response) => {
-          this.pokemons = []
-          for (let i = 0; i < limit; i++) {
-            const pokemon = this.http
-              .get<Pokemon>(`${POKEMON_API}pokemon/${response.results[i].name}`)
-              .subscribe({
-                next: (pokemon) => {
-                  this.pokemons?.push(pokemon);
-                },
-                error: (error) => {
-                  console.log(error);
-                }
-              });
-          }
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    }
-  
-  getPokemon(id: number): void {
-    this.pokemonService.getPokemon(id).subscribe({
-      next: (response) => {
-        this.pokemon = response;
-        this.pokemon.image = `${POKEMON_IMG_API}${id}.png`
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-  }
-  getPokemonDetails(id: number): void {
-    this.pokemonService.getPokemonDetails(id).subscribe({
-      next: (response: PokemonDetails) => {
-        this.pokemonDetails = response;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+  handleGetDetails() {
+    this.pokemonService.apiGetPokemonDetails(this.pokemon.id)
+
+    console.log(this.details)
+
+    this.btnToggle = !this.btnToggle
+    if(this.btnToggle) this.text = "Show less"
+    else this.text = "Show more"
   }
 }

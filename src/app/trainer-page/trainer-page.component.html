@@ -1,1 +1,17 @@
-<p>trainer-page works!</p>
+<section>
+  <h1>Trainer Page</h1>
+  <app-pokemon-detail [pokemon]="pokemon"></app-pokemon-detail>
+  <div class="flex">
+    <h2 id="username">Username</h2>
+    <button [routerLink]="['/catalogue']" class="ml-30">Go to catalogue</button>
+  </div>
+  <div class="collection-box">
+    <div *ngIf="pokemons.length !== 0">
+      <app-pokemon-list
+        [pokemonsList]="pokemons"
+        [decoratorType]="'Trainer'"
+      ></app-pokemon-list>
+    </div>
+  </div>
+  <p>{{details.stats[0].base_stat}}</p>
+</section>
