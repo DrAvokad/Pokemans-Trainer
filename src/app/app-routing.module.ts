@@ -8,11 +8,6 @@ import { AuthGuard } from './guards/auth.guard';
 const routes = [
   {
     path: '',
-    pathMatch: 'full', //Safe practice for displaying the first path
-    redirectTo: 'login'
-  },
-  {
-    path: 'login',
     component: LandingPageComponent,
   },
   {
