@@ -26,7 +26,7 @@ export class LandingPageComponent implements OnInit {
         //Fetch userinput and user trainerservice to sign in user
         const { username } = form.value;
         this.trainerSerivce.signInUser(username)
-        localStorage.setItem("trainer-username", username)
+        // localStorage.setItem("trainer-username", username)
         //Redirect to catalogue page
         this.router.navigateByUrl("/catalogue");
     }
