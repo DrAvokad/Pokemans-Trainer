@@ -19,7 +19,14 @@ export class TrainesService {
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
     constructor(private readonly http: HttpClient, private router: Router) {
-        this._username = localStorage.getItem(USER_KEY) || "";
+        if(localStorage.getItem(USER_KEY) !== null){
+            const stringObj = localStorage.getItem(USER_KEY);
+            this._trainer = JSON.parse(stringObj || "")
+            this._username = JSON.parse(stringObj || "").username
+        }else{
+            this._trainer = null
+            this._username = ""
+        }
     }
 
     private createHeaders() {
@@ -37,34 +44,15 @@ export class TrainesService {
         return this._trainer;
     }
 
-    set username(username: string) {
-        sessionStorage.setItem(USER_KEY, username)
-        this._username = username;
-    }
-
-
-    apiGetTrainers(): void {
-        this.http
-            .get<Trainer[]>(`https://heroku-test-api-rasmus.herokuapp.com/trainers?id=1`)
-            .pipe(catchError(this.handleError<any>('getTrainers', [])))
-            .subscribe({
-                next: (response) => {
-                    this._trainer = response[0]
-                    console.log(response);
-                },
-                error: (error) => {
-                    console.log(console.error());
-                }
-            });
-    }
-
     apiAddPokemonToTrainer(pokemon:Pokemon): void {
         const headers = this.createHeaders();
         this.trainer?.pokemon.push(pokemon.name);
         this.http
         .patch(`https://heroku-test-api-rasmus.herokuapp.com/trainers/${this.trainer?.id}`, this._trainer, {headers})
         .pipe(catchError(this.handleError<any>('addPokemon', [])))
-        .subscribe()
+        .subscribe(data =>{
+            localStorage.setItem(USER_KEY, JSON.stringify(data))
+        })
     }
 
     public signInUser(username: string): void {
