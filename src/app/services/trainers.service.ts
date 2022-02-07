@@ -14,6 +14,8 @@ export class TrainesService {
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
     constructor(private readonly http: HttpClient) {
+        this._username = sessionStorage.getItem(USER_KEY) || "";
+        this._username = localStorage.getItem(USER_KEY) || "";
     }
      
     get username(): string {
@@ -22,6 +24,7 @@ export class TrainesService {
 
     set username(username: string) {
         sessionStorage.setItem(USER_KEY, username)
+        localStorage.setItem(USER_KEY, username)
         this._username = username;
     }
 

@@ -27,7 +27,7 @@ export class LandingPageComponent implements OnInit {
         //Save user locally
         const { username } = form.value;
         this.trainerSerivce.username = username; 
-        this.router.navigateByUrl("/catalogue")
+        this.router.navigateByUrl("/catalogue");
 
         //Redirect to catalogue page
     }
