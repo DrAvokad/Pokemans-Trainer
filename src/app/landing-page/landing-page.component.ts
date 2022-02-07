@@ -21,15 +21,21 @@ export class LandingPageComponent implements OnInit {
     }
 
     onLoginSubmit(form: NgForm): void {
-      
-        //Check if users exists
-
         //Save user locally
         const { username } = form.value;
-        this.trainerSerivce.username = username; 
+        // this.trainerSerivce.signInUser(username)
+        this.trainerSerivce.createUser(username)
+
+
+
+        // this.trainerSerivce.username = username; May be needed
+        //Redirect to catalogue page
         this.router.navigateByUrl("/catalogue");
 
-        //Redirect to catalogue page
+
+
+
+
     }
 
 
