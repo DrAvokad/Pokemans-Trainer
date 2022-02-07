@@ -35,7 +35,6 @@ export class TrainesService {
                 if (data.length > 0) {
                     console.log("Logged in as user: " + data[0].username);//Will change this line
                     this._username = data[0].username;
-                    localStorage.setItem(USER_KEY, username)
                 }
                 else {
                     console.log("Creating user");
@@ -52,7 +51,6 @@ export class TrainesService {
         })
             .subscribe(data => {
                 this._username = data.username;
-                localStorage.setItem(USER_KEY, username)
                 console.log("Created user: " + data.username)
             })
     }
