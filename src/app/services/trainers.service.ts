@@ -1,6 +1,9 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { catchError, Observable, of } from "rxjs";
+import { Pokemon } from "../models/pokemon.model";
 import { Trainer } from "../models/trainer.model";
+
 
 const USER_KEY = "trainer-username"
 @Injectable({
@@ -10,14 +13,26 @@ const USER_KEY = "trainer-username"
 export class TrainesService {
 
     //Setting props to private beacuse of security
+    private _trainer: Trainer | null = null
     private _username: string = "";
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
     constructor(private readonly http: HttpClient) {
     }
-     
+
+    private createHeaders() {
+        return new HttpHeaders({
+            'Content-Type': 'application/json',
+            'x-api-key': "Qbhkk91GuMAKk0jjhiXpV4yaJF4dpsZOyYNSAq1MdN3VMBoCf1bwBPfiZHVLoG8M"
+        })
+    }
+
     get username(): string {
         return this._username;
+    }
+
+    get trainer(): Trainer | null {
+        return this._trainer;
     }
 
     set username(username: string) {
@@ -25,48 +40,82 @@ export class TrainesService {
         this._username = username;
     }
 
+
+    apiGetTrainers(): void {
+        this.http
+            .get<Trainer[]>(`https://heroku-test-api-rasmus.herokuapp.com/trainers?id=1`)
+            .pipe(catchError(this.handleError<any>('getTrainers', [])))
+            .subscribe({
+                next: (response) => {
+                    this._trainer = response[0]
+                    console.log(response);
+                },
+                error: (error) => {
+                    console.log(console.error());
+                }
+            });
+    }
+
+    apiAddPokemonToTrainer(pokemon:Pokemon): void {
+        const headers = this.createHeaders();
+        this.trainer?.pokemon.push(pokemon.name);
+        this.http
+        .patch(`https://heroku-test-api-rasmus.herokuapp.com/trainers/${this.trainer?.id}`, this._trainer, {headers})
+        .pipe(catchError(this.handleError<any>('addPokemon', [])))
+        .subscribe()
+    }
+
     public fetchTrainers(): void {
         this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
-        .subscribe((trainers: Trainer[]) => {
-            this._trainers = trainers;
-        }, (error: HttpErrorResponse) => {
-            this._error = error.message;
-        }); 
+            .subscribe((trainers: Trainer[]) => {
+                this._trainers = trainers;
+            }, (error: HttpErrorResponse) => {
+                this._error = error.message;
+            });
     }
 
 
     public signInUser(): void {
         this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
-        .subscribe((trainers: Trainer[]) => {
-            this._trainers = trainers;
-            //Searching for username in api
-            for (const trainer of this._trainers) {
-                if("ash" === trainer.username)
-                {
-                    console.log("Logging in");
+            .subscribe((trainers: Trainer[]) => {
+                this._trainers = trainers;
+                //Searching for username in api
+                for (const trainer of this._trainers) {
+                    if ("ash" === trainer.username) {
+                        console.log("Logging in");
+                    }
+                    else {
+                        let username = "Aldin"
+                        this.createUser();
+                    }
                 }
-                else
-                {
-                    let username = "Aldin"
-                    this.createUser();
-                }
-            }
-        })
+            })
     }
 
 
     public createUser(): void {
-       
+
     }
 
     //This method runs several times
     public trainers(): Trainer[] {
         return this._trainers;
-        
+
     }
 
     public error(): string {
         return this._error;
+    }
+
+    // Log errors to message service
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+            console.error(error);
+
+            // this.log(`${operation} failed: ${error.message}`);
+
+            return of(result as T);
+        };
     }
 
 }

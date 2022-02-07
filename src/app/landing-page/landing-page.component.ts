@@ -17,7 +17,7 @@ export class LandingPageComponent implements OnInit {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
-
+        this.trainerSerivce.apiGetTrainers();
     }
 
     onLoginSubmit(form: NgForm): void {
@@ -27,6 +27,7 @@ export class LandingPageComponent implements OnInit {
         //Save user locally
         const { username } = form.value;
         this.trainerSerivce.username = username; 
+        console.log(this.trainerSerivce.trainer)
         this.router.navigateByUrl("/catalogue")
 
         //Redirect to catalogue page

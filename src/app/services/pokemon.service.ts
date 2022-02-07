@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from '../models/pokemon.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { PokemonDetails } from '../models/pokemon-details.model';
 import { POKEMON_API } from '../resources';
-import { PokemonList } from '../models/pokemonList.model';
 
 @Injectable({
   providedIn: 'root',
@@ -59,6 +58,18 @@ export class PokemonService {
           this._pokemon = response
         }
       });
+  }
+  apiGetPokemonByName(name: string): Pokemon {
+    let pokemon = {"id":0,"name":"Errormon","image":"500","collected":false};
+    this.http
+      .get<Pokemon>(`${POKEMON_API}pokemon/${name}`)
+      .pipe(catchError(this.handleError<any>('getPokemon', [])))
+      .subscribe({  
+        next: (response: any) => {
+          pokemon = response
+        }
+      });
+      return pokemon
   }
   apiGetPokemons(offset: number, limit: number): void {
     this._pokemons = []
