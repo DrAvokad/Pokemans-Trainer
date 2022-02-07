@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { catchError, Observable, of } from "rxjs";
 import { Pokemon } from "../models/pokemon.model";
 import { Trainer } from "../models/trainer.model";
@@ -17,8 +18,8 @@ export class TrainesService {
     private _username: string = "";
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
-    constructor(private readonly http: HttpClient) {
-
+    constructor(private readonly http: HttpClient, private router: Router) {
+        this._username = localStorage.getItem(USER_KEY) || "";
     }
 
     private createHeaders() {
@@ -72,6 +73,9 @@ export class TrainesService {
                 if (data.length > 0) {
                     console.log("Logged in as user: " + data[0].username);//Will change this line
                     this._username = data[0].username;
+                    //Store users object in local storage
+                    localStorage.setItem(USER_KEY, JSON.stringify(data[0]));
+                    this.router.navigateByUrl("/catalogue");
                 }
                 else {
                     console.log("Creating user");
@@ -91,6 +95,9 @@ export class TrainesService {
             .subscribe(data => {
                 this._username = data.username;
                 console.log("Created user: " + data.username)
+                //Store users object in local storage
+                localStorage.setItem(USER_KEY, JSON.stringify(data))
+                this.router.navigateByUrl("/catalogue");
             })
     }
 
