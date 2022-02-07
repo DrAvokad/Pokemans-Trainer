@@ -17,24 +17,16 @@ export class LandingPageComponent implements OnInit {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
-
+        //Cear local storage when users returs to login page
+        localStorage.clear();
     }
 
     onLoginSubmit(form: NgForm): void {
-        //Save user locally
+        //Fetch userinput and user trainerservice to sign in user
         const { username } = form.value;
-        // this.trainerSerivce.signInUser(username)
-        this.trainerSerivce.createUser(username)
-
-
-
-        // this.trainerSerivce.username = username; May be needed
+        this.trainerSerivce.signInUser(username)
         //Redirect to catalogue page
         this.router.navigateByUrl("/catalogue");
-
-
-
-
 
     }
 
