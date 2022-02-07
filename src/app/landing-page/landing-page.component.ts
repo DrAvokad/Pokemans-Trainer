@@ -17,6 +17,7 @@ export class LandingPageComponent implements OnInit {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
+        //If user is stored in local storage then redirect to catalogue page
         if(localStorage.getItem("trainer-username")?.length !== null) {
             this.router.navigateByUrl("/catalogue")
         }
@@ -28,7 +29,7 @@ export class LandingPageComponent implements OnInit {
         this.trainerSerivce.signInUser(username)
         // localStorage.setItem("trainer-username", username)
         //Redirect to catalogue page
-        this.router.navigateByUrl("/catalogue");
+        // this.router.navigateByUrl("/catalogue");
     }
 
 

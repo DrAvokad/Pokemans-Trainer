@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Trainer } from "../models/trainer.model";
 
 //This is a reference to the user in the local state
@@ -14,8 +15,9 @@ export class TrainesService {
     private _username: string = "";
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient, private router: Router) {
         this._username = localStorage.getItem(USER_KEY) || "";
+
     }
 
     private createHeaders() {
@@ -36,7 +38,8 @@ export class TrainesService {
                     console.log("Logged in as user: " + data[0].username);//Will change this line
                     this._username = data[0].username;
                     //Store users object in local storage
-                    localStorage.setItem(USER_KEY, JSON.stringify(data[0]))
+                    localStorage.setItem(USER_KEY, JSON.stringify(data[0]));
+                    this.router.navigateByUrl("/catalogue");
                 }
                 else {
                     console.log("Creating user");
@@ -56,6 +59,7 @@ export class TrainesService {
                 console.log("Created user: " + data.username)
                 //Store users object in local storage
                 localStorage.setItem(USER_KEY, JSON.stringify(data))
+                this.router.navigateByUrl("/catalogue");
             })
     }
 
