@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../models/pokemon.model';
+import { PokemonService } from '../services/pokemon.service';
 import { TrainesService } from '../services/trainers.service';
 
 @Component({
@@ -7,20 +8,37 @@ import { TrainesService } from '../services/trainers.service';
   templateUrl: './catalogue-page.component.html',
   styleUrls: ['./catalogue-page.component.css']
 })
+
 export class CataloguePageComponent implements OnInit {
-  //Hardcoded Pokemon. Replace with imported list of pokemon from API.
-  testImg: string = "../../assets/pokman.png";
-  testImg2: string = "../../assets/saltshakermon.png";
-  pokemans: Pokemon[] = [{"id":1, "name":"Carl the Destroyermon", "image":this.testImg, "collected": true}, {"id":2, "name":"Jah mon","image":this.testImg, "collected": false}, {"id":3, "name":"Chorizo","image":this.testImg, "collected": false}, {"id":32, "name":"Saltshakermon", "image":this.testImg2, "collected":true}]
+  private loadingIndex: number = 0;
+  constructor(private pokemonService: PokemonService, private trainerService: TrainesService) { }
 
-  //Returning username from user service
+  get pokemons(): Pokemon[] {
+    return this.pokemonService.pokemons;
+
   get username(): string {
-    return this.trainerSerive.username;
+    return this.trainerService.username;
   }
-
-  constructor(private trainerSerive: TrainesService) { }
 
   ngOnInit(): void {
+    this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
+    //test code
+    this.trainerService.apiGetTrainers();
   }
 
+  handleLoadNext(): void {
+    this.loadingIndex += 20;
+    this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20)
+  }
+
+  handleLoadPrevious(): void {
+    if (this.loadingIndex !== 0) {
+      this.loadingIndex -= 20;
+      this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
+    }
+  }
+
+  userFunction(): void {
+    console.log(this.trainerService.trainer)
+  }
 }
