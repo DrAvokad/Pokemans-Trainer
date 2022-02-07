@@ -1,3 +1,14 @@
 <h1>Welcome {{username}}</h1>
-
-<app-pokemon-list [pokemonsList]="pokemans"></app-pokemon-list>
+<h2>Pokémon Catalogue</h2>
+<button type="button" (click)="userFunction()">User</button>
+<div>
+    <button type="button" (click)="handleLoadPrevious()">Previous</button>
+    <button type="button" (click)="handleLoadNext()">Next</button>
+</div>
+<div *ngIf="pokemons.length !== 0">
+    <app-pokemon-list [pokemonsList]="pokemons" [decoratorType]="'Catalogue'"></app-pokemon-list>
+</div>
+<div>
+    <button type="button" (click)="handleLoadPrevious()">Previous</button>
+    <button type="button" (click)="handleLoadNext()">Next</button>
+</div>
