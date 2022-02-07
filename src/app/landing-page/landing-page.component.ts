@@ -17,9 +17,9 @@ export class LandingPageComponent implements OnInit {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
-        //Cear local storage when users returs to login page
-        localStorage.clear();
-        console.log("Local storage start: " + localStorage.getItem("trainer-username"))
+        if(localStorage.getItem("trainer-username")?.length !== null) {
+            this.router.navigateByUrl("/catalogue")
+        }
     }
 
     onLoginSubmit(form: NgForm): void {
