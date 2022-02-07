@@ -3,15 +3,24 @@ import { CataloguePageComponent } from './catalogue-page/catalogue-page.componen
 import { TrainerPageComponent } from './trainer-page/trainer-page.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes = [
   {
-    path: '', 
+    path: '',
     component: LandingPageComponent,
     pathMatch: 'full' //Safe practice for displaying the first path
   },
-  { path: 'trainer', component: TrainerPageComponent },
-  { path: 'catalogue', component: CataloguePageComponent },
+  {
+    path: 'trainer',
+    component: TrainerPageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'catalogue',
+    component: CataloguePageComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
