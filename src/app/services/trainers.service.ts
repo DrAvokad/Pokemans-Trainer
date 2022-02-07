@@ -4,7 +4,7 @@ import { catchError, Observable, of } from "rxjs";
 import { Pokemon } from "../models/pokemon.model";
 import { Trainer } from "../models/trainer.model";
 
-
+//This is a reference to the user in the local state
 const USER_KEY = "trainer-username"
 @Injectable({
     providedIn: 'root'
@@ -18,6 +18,7 @@ export class TrainesService {
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
     constructor(private readonly http: HttpClient) {
+
     }
 
     private createHeaders() {
@@ -65,36 +66,32 @@ export class TrainesService {
         .subscribe()
     }
 
-    public fetchTrainers(): void {
-        this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
-            .subscribe((trainers: Trainer[]) => {
-                this._trainers = trainers;
-            }, (error: HttpErrorResponse) => {
-                this._error = error.message;
-            });
-    }
+    public signInUser(username: string): void {
+        this.http.get<any>(`https://heroku-test-api-rasmus.herokuapp.com/trainers?username=${username}`)
+            .subscribe((data) => {
+                if (data.length > 0) {
+                    console.log("Logged in as user: " + data[0].username);//Will change this line
+                    this._username = data[0].username;
+                }
+                else {
+                    console.log("Creating user");
+                    this.createUser(username)
 
-
-    public signInUser(): void {
-        this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
-            .subscribe((trainers: Trainer[]) => {
-                this._trainers = trainers;
-                //Searching for username in api
-                for (const trainer of this._trainers) {
-                    if ("ash" === trainer.username) {
-                        console.log("Logging in");
-                    }
-                    else {
-                        let username = "Aldin"
-                        this.createUser();
-                    }
                 }
             })
     }
 
 
-    public createUser(): void {
-
+    public createUser(username: string): void {
+        const user = { username, pokemon: [] }
+        const headers = this.createHeaders();
+        this.http.post<Trainer>('https://heroku-test-api-rasmus.herokuapp.com/trainers', user, {
+            headers
+        })
+            .subscribe(data => {
+                this._username = data.username;
+                console.log("Created user: " + data.username)
+            })
     }
 
     //This method runs several times

@@ -16,8 +16,6 @@ export class CataloguePageComponent implements OnInit {
   get pokemons(): Pokemon[] {
     return this.pokemonService.pokemons;
 
-  }
-
   get username(): string {
     return this.trainerService.username;
   }

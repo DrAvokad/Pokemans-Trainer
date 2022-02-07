@@ -17,20 +17,19 @@ export class LandingPageComponent implements OnInit {
     }
     //This method runs once when component is rendered
     ngOnInit(): void {
-        this.trainerSerivce.apiGetTrainers();
+
+        localStorage.clear();
+        console.log("Local storage start: " + localStorage.getItem("trainer-username"))
     }
 
     onLoginSubmit(form: NgForm): void {
-      
-        //Check if users exists
-
-        //Save user locally
+        //Fetch userinput and user trainerservice to sign in user
         const { username } = form.value;
-        this.trainerSerivce.username = username; 
-        console.log(this.trainerSerivce.trainer)
-        this.router.navigateByUrl("/catalogue")
+        this.trainerSerivce.signInUser(username)
+        localStorage.setItem("trainer-username", username)
 
         //Redirect to catalogue page
+        this.router.navigateByUrl("/catalogue");
     }
 
 
