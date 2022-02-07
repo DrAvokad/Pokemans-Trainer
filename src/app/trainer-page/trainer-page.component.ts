@@ -1,36 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { POKEMONS } from '../mock-pokemans';
 import { PokemonDetails } from '../models/pokemon-details.model';
 import { PokemonService } from '../services/pokemon.service';
 import { Pokemon } from '../models/pokemon.model';
-
+import { Trainer } from '../models/trainer.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-trainer-page',
   templateUrl: './trainer-page.component.html',
-  styleUrls: ['./trainer-page.component.css']
+  styleUrls: ['./trainer-page.component.css'],
 })
 export class TrainerPageComponent implements OnInit {
-  constructor(private router: Router,
-    private pokemonService: PokemonService) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private userService: UserService
+  ) {}
 
-  get details(): PokemonDetails {
-    return this.pokemonService.details
-  }
+  user = localStorage.getItem('user')
+
   get pokemon(): Pokemon {
     return this.pokemonService.pokemon
   }
-  get pokemons(): Pokemon[] {
-    return this.pokemonService.pokemons
-  }
+
+  pokemons: Pokemon[] = [{id: 0, name: "bulbasaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", collected: false}]
 
   ngOnInit(): void {
     // fetch user
-    this.pokemonService.apiGetPokemonDetails(1)
-    this.pokemonService.apiGetPokemon(5);
-    this.pokemonService.apiGetPokemons(0, 20)
   }
-
-
 }

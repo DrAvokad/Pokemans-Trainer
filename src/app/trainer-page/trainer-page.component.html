@@ -1,8 +1,8 @@
 <section>
-  <h1>Trainer Page</h1>
-  <app-pokemon-detail [pokemon]="pokemon"></app-pokemon-detail>
   <div class="flex">
-    <h2 id="username">Username</h2>
+    <div *ngIf="user !== null">
+      <h2 id="username">{{ user }}</h2>
+    </div>
     <button [routerLink]="['/catalogue']" class="ml-30">Go to catalogue</button>
   </div>
   <div class="collection-box">
@@ -13,5 +13,4 @@
       ></app-pokemon-list>
     </div>
   </div>
-  <p>{{details.stats[0].base_stat}}</p>
 </section>
