@@ -1,9 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs";
 import { Trainer } from "../models/trainer.model";
 
+//This is a reference to the user in the local state
 const USER_KEY = "trainer-username"
 @Injectable({
     providedIn: 'root'
@@ -30,48 +29,37 @@ export class TrainesService {
         return this._username;
     }
 
-    set username(username: string) {
-        localStorage.setItem(USER_KEY, username)
-        this._username = username;
-    }
-
     public signInUser(username: string): void {
-        this.http.get<Trainer[]>('https://heroku-test-api-rasmus.herokuapp.com/trainers')
-            .subscribe((trainers: Trainer[]) => {
-                this._trainers = trainers;
-                //Searching for username in api
-                for (const trainer of this._trainers) {
-                    if (username === trainer.username) {
-                        console.log("Logging in");
-                        localStorage.setItem(USER_KEY, username)
-                    }
-                    else {
-                        // let username = "Aldin"
-                        // this.createUser(username);
-                        console.log("Regging user")
-                        this.createUser(username)
-                        localStorage.setItem(USER_KEY, username)
-                    }
+        this.http.get<any>(`https://heroku-test-api-rasmus.herokuapp.com/trainers?username=${username}`)
+            .subscribe((data) => {
+                if (data.length > 0) {
+                    console.log("Logged in as user: " + data[0].username);//Will change this line
+                    this._username = data[0].username;
+                    localStorage.setItem(USER_KEY, username)
+                }
+                else {
+                    console.log("Creating user");
+                    this.createUser(username)
                 }
             })
     }
 
-
     public createUser(username: string): void {
-        const user = {username, pokemon:[]}
+        const user = { username, pokemon: [] }
         const headers = this.createHeaders();
-        this.http.post<Trainer>('https://heroku-test-api-rasmus.herokuapp.com/trainers', user,{
-            headers          
+        this.http.post<Trainer>('https://heroku-test-api-rasmus.herokuapp.com/trainers', user, {
+            headers
         })
-        .subscribe( data => {
-            console.log(data)
-        })
+            .subscribe(data => {
+                this._username = data.username;
+                localStorage.setItem(USER_KEY, username)
+                console.log("Created user: " + data.username)
+            })
     }
 
     //This method runs several times
     public trainers(): Trainer[] {
         return this._trainers;
-
     }
 
     public error(): string {
