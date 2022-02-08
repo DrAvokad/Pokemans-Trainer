@@ -1,15 +1,27 @@
-//Install express server
 const express = require('express');
-const path = require('path');
-
 const app = express();
+const packageJson = require('./package.json')
 
-// Serve only the static files form the dist directory
-app.use(express.static('./dist/angular-app-heroku'));
+// Middleware
+app.use(requireHTTPS);
+app.use(express.static('./dist/' + packageJson.name));
 
-app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: 'dist/angular-app-heroku/'}),
-);
+// Redirect app request to index.html
+app.get('/*', (req, res) => {
+  res.sendFile('index.html', {root: 'dist/' + packageJson.name});
+});
 
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+// Start server
+app.listen(process.env.PORT || 8080, () => console.log('Server started...'));
+
+/**
+ * @author: Klement Omeri
+ * Special thanks to Klement for providing the function to redirect traffic from http to https
+ */
+function requireHTTPS(req, res, next) {
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+}
