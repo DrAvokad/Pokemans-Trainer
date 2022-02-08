@@ -28,7 +28,7 @@ export class TrainerPageComponent implements OnInit {
       this.strObj = localStorage.getItem(USER_KEY);
       this._trainer = JSON.parse(this.strObj || '');
     }
-
+  }
   username: string = '';
   pokemons: Pokemon[] = [];
 
