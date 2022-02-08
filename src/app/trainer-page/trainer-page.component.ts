@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonDetails } from '../models/pokemon-details.model';
 import { PokemonService } from '../services/pokemon.service';
 import { Pokemon } from '../models/pokemon.model';
 import { Trainer } from '../models/trainer.model';
-import { UserService } from '../services/user.service';
+import { TrainesService } from '../services/trainers.service';
+import { USER_KEY } from '../services/trainers.service';
+import { POKEMON_IMG_API } from '../resources';
 
 @Component({
   selector: 'app-trainer-page',
@@ -11,20 +12,35 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./trainer-page.component.css'],
 })
 export class TrainerPageComponent implements OnInit {
-  constructor(
-    private pokemonService: PokemonService,
-    private userService: UserService
-  ) {}
-
-  user = localStorage.getItem('user')
-
-  get pokemon(): Pokemon {
-    return this.pokemonService.pokemon
+  private _trainer: Trainer = {
+    id: 0,
+    username: '',
+    pokemon: [{ name: '', id: 0 }],
+  };
+  private strObj: string | null = '';
+  private pokemon: Pokemon = { id: 0, name: 'Errormon', image: `${POKEMON_IMG_API}${0}.png`, collected: true };
+  constructor() {
+    if (localStorage.getItem(USER_KEY) !== null) {
+      this.strObj = localStorage.getItem(USER_KEY);
+      this._trainer = JSON.parse(this.strObj || '');
+    }
   }
 
-  pokemons: Pokemon[] = [{id: 0, name: "bulbasaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", collected: false}]
+  username: string = '';
+  pokemons: Pokemon[] = [];
 
   ngOnInit(): void {
-    // fetch user
+    this.username = this._trainer.username;
+
+    for (let i = 0; i < this._trainer.pokemon.length; i++) {
+      this.pokemon = {
+        id: this._trainer.pokemon[i].id,
+        name: this._trainer.pokemon[i].name,
+        image: `${POKEMON_IMG_API}${this._trainer.pokemon[i].id}.png`,
+        collected: true,
+      };
+
+      this.pokemons.push(this.pokemon)
+    }
   }
 }
