@@ -13,3 +13,20 @@ body{
   height: 100vh;
   background: #AEFFD8 no-repeat;
 }
+button {
+  background-color: #fff;
+  border: none;
+  margin: 2px;
+  padding: 6px;
+  box-shadow: 0 0 3px 0 rgb(41, 41, 41);
+  cursor: pointer;
+}
+button:hover{
+  background-color: #ddd;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family: var(--font);
+}
+p, div, span, button {
+  font-family: var(--fontSecond);
+}
