@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../models/pokemon.model';
 import { PokemonService } from '../services/pokemon.service';
 import { TrainesService } from '../services/trainers.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-catalogue-page',
@@ -10,8 +11,11 @@ import { TrainesService } from '../services/trainers.service';
 })
 
 export class CataloguePageComponent implements OnInit {
+  
   private loadingIndex: number = 0;
-  constructor(private pokemonService: PokemonService, private trainerService: TrainesService) { }
+
+  constructor(private pokemonService: PokemonService, private trainerService: TrainesService,
+    private router: Router) { }
 
   get pokemons(): Pokemon[] {
     return this.pokemonService.pokemons;
@@ -35,6 +39,10 @@ export class CataloguePageComponent implements OnInit {
       this.loadingIndex -= 20;
       this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
     }
+  }
+
+  goToTrainerPage(): void {
+    this.router.navigateByUrl("/trainer")
   }
 
   userFunction(): void {

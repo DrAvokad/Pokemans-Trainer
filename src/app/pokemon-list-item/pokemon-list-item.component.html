@@ -1,7 +1,8 @@
 <p>Name of pokemon is {{listDecorator.pokemon.name}}</p>
 <img [src]="listDecorator.pokemon.image">
 <app-pokemon-catalogue 
-    [collected]="listDecorator.pokemon.collected"
-    (clicked)="handleCollected()"
-    *ngIf="catalogue"></app-pokemon-catalogue>
+    [pokemon]="listDecorator.pokemon"
+    (clicked)="handleDecoratorEvent($event)"
+    *ngIf="catalogue">
+</app-pokemon-catalogue>
 <app-pokemon-trainer *ngIf="trainer"></app-pokemon-trainer>

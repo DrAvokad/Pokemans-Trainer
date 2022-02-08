@@ -3,6 +3,8 @@
   box-shadow: 0 0 5px 0 gray;
   width: 200px;
   padding-bottom: 5px;
+  position: fixed;
+  margin-left: 30em;
 }
 .flex{
   display: flex;
