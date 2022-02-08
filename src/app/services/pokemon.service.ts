@@ -16,6 +16,7 @@ export class PokemonService {
     private messageService: MessageService
   ) { }
 
+  private POKEMON_SESSION_KEY: string = "offset:"
   private _pokemon: Pokemon = { id: 0, name: '', image: '', collected: false };
   private _selectedPokemon: Pokemon = { "id": 0, "name": "Errormon", "image": "500", "collected": false }
   private _pokemons: Pokemon[] = [];
@@ -86,7 +87,19 @@ export class PokemonService {
       });
     return pokemon
   }
+  apiUpdateSession(index: number) {
+    console.log(this.POKEMON_SESSION_KEY+index)
+    let pokemans = JSON.parse(sessionStorage.getItem(this.POKEMON_SESSION_KEY+index) || "this should not be null")
+    for(let i = 0; i < 5; i++){
+      this._pokemons.push(pokemans[i])
+    } 
+  }
   apiGetPokemons(offset: number, limit: number): void {
+    if(sessionStorage.getItem(this.POKEMON_SESSION_KEY+offset) !== null){
+     this._pokemons = []
+     this.apiUpdateSession(offset)
+     
+    }else{
     this._pokemons = []
     this.http.get<Pokemon[]>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
       .pipe(catchError(this.handleError<any>('getPokemons', [])))
@@ -103,11 +116,13 @@ export class PokemonService {
             }
             this.pokemons?.push(pokemon)
           }
+          sessionStorage.setItem(this.POKEMON_SESSION_KEY+offset, JSON.stringify(this._pokemons))
         },
         error: (error) => {
           console.log(error);
         },
       });
+    }
   }
 
   // Log to message service

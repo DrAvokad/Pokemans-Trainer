@@ -26,18 +26,18 @@ export class CataloguePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
+    this.pokemonService.apiGetPokemons(this.loadingIndex, 20);
   }
 
   handleLoadNext(): void {
     this.loadingIndex += 20;
-    this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20)
+    this.pokemonService.apiGetPokemons(this.loadingIndex, 20)
   }
 
   handleLoadPrevious(): void {
     if (this.loadingIndex !== 0) {
       this.loadingIndex -= 20;
-      this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
+      this.pokemonService.apiGetPokemons(this.loadingIndex, 20);
     }
   }
 
