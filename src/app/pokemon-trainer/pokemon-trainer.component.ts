@@ -12,4 +12,8 @@ export class PokemonTrainerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleRemovePokemon() {
+    console.log("pokemon removed")
+  }
+
 }
