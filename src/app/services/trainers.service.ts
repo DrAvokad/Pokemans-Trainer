@@ -18,6 +18,7 @@ export class TrainesService {
     private _username: string = "";
     private _trainers: Trainer[] = [];//Using Trainer model to store fetched trainar data
     private _error: string = '';
+    
     constructor(private readonly http: HttpClient, private router: Router) {
         if(localStorage.getItem(USER_KEY) !== null){
             const stringObj = localStorage.getItem(USER_KEY);
@@ -51,8 +52,7 @@ export class TrainesService {
         .patch(`https://heroku-test-api-rasmus.herokuapp.com/trainers/${this.trainer?.id}`, this._trainer, {headers})
         .pipe(catchError(this.handleError<any>('addPokemon', [])))
         .subscribe(data =>{
-            console.log(data)
-            //localStorage.setItem(USER_KEY, JSON.stringify(data))
+            localStorage.setItem(USER_KEY, JSON.stringify(data))
         })
     }
 
