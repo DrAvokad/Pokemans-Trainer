@@ -17,7 +17,7 @@ export class PokemonListItemComponent implements OnInit {
   catalogue: Boolean = false
   trainer: Boolean = false
 
-  constructor(private trainerService: TrainesService) {
+  constructor(private trainerService: TrainesService, private pokemonService: PokemonService) {
     this.listDecorator = {"pokemon":{"id":0,"name":"Errormon","image":"500","collected":false}, "decoratorType":"Catalogue"}
     this.index = 0;
   }
@@ -34,7 +34,7 @@ export class PokemonListItemComponent implements OnInit {
   handleCollected(): void{
     this.listDecorator.pokemon.collected = true
     this.trainerService.apiAddPokemonToTrainer(this.listDecorator.pokemon)
-
+  }
     //May be deleted!
   handleDecoratorEvent(string: string): void {
     switch (string) {

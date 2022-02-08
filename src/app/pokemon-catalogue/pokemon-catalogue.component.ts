@@ -8,11 +8,13 @@ import { Pokemon } from '../models/pokemon.model';
 })
 export class PokemonCatalogueComponent implements OnInit {
   @Input() pokemon: Pokemon;
+  @Input() collected: Boolean;
   @Output() clicked: EventEmitter<string> = new EventEmitter();
   collectedImg: String = "../../assets/pokball.png"
 
   constructor() { 
     this.pokemon = { "id": 0, "name": "Errormon", "image": "500", "collected": false }
+    this.collected = false;
   }
 
   onCollected(): void {
