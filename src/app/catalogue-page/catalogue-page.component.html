@@ -1,17 +1,23 @@
-<h1>Welcome {{username}}</h1>
-<h2>Pokémon Catalogue</h2>
-<button type="button" (click)="goToTrainerPage()">Trainer Page</button>
-<div>
+<div class="box">
+  <h1>Welcome {{ username }}</h1>
+  <h2>Pokémon Catalogue</h2>
+
+  <button type="button" (click)="goToTrainerPage()">Trainer Page</button>
+  <div>
     <button type="button" (click)="handleLoadPrevious()">Previous</button>
     <button type="button" (click)="handleLoadNext()">Next</button>
-</div>
-<div>
+  </div>
+  <div>
     <app-pokemon-detail></app-pokemon-detail>
-</div>
-<div *ngIf="pokemons.length !== 0">
-    <app-pokemon-list [pokemonsList]="pokemons" [decoratorType]="'Catalogue'"></app-pokemon-list>
-</div>
-<div>
+  </div>
+  <div *ngIf="pokemons.length !== 0">
+    <app-pokemon-list
+      [pokemonsList]="pokemons"
+      [decoratorType]="'Catalogue'"
+    ></app-pokemon-list>
+  </div>
+  <div>
     <button type="button" (click)="handleLoadPrevious()">Previous</button>
     <button type="button" (click)="handleLoadNext()">Next</button>
+  </div>
 </div>
