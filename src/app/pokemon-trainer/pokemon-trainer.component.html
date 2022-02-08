@@ -1,1 +1,5 @@
-<button type="button">Remove Pokémon</button>
+<div *ngIf="pokemon.collected">
+  <p>{{pokemon.name}}</p>
+  <img [src]="pokemon.image"/>
+  <button class="remove-btn" (click)="handleRemovePokemon()" type="button">Remove Pokémon</button>
+</div>

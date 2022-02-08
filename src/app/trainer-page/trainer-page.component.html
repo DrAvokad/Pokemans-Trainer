@@ -1,11 +1,14 @@
 <section>
-  <div class="flex">
+  <div class="">
     <div *ngIf="username !== null">
       <h2 id="username">{{ username }}</h2>
     </div>
-    <button [routerLink]="['/catalogue']" class="ml-30">Go to catalogue</button>
+    <div>
+    <button [routerLink]="['/catalogue']" class="router-btn">Go to catalogue</button>
+  </div>
   </div>
   <div class="collection-box">
+    <h3>My Collection</h3>
     <div *ngIf="pokemons.length !== 0">
       <app-pokemon-list
         [pokemonsList]="pokemons"
