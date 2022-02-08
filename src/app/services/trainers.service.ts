@@ -57,7 +57,7 @@ export class TrainesService {
         .pipe(catchError(this.handleError<any>('addPokemon', [])))
         .subscribe(data =>{
             console.log(data)
-            //localStorage.setItem(USER_KEY, JSON.stringify(data))
+            localStorage.setItem(USER_KEY, JSON.stringify(data))
         })
     }
 
