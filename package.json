@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "postinstall": "ng build --prod",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
