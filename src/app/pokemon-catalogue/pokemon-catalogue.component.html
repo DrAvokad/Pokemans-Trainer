@@ -1,5 +1,9 @@
-<p>{{pokemon.name}}</p>
-<img [src]="pokemon.image"/>
-<button type="button" (click)="onCollected()">Add Pokémon</button>
-<button type="button" (click)="onShowDetail()">Show Details</button>
-<img [src]="collectedImg" class="catalogue-image" *ngIf="pokemon.collected" >
+<div class="flex">
+  <p>{{ pokemon.name }}</p>
+  <img [src]="collectedImg" class="catalogue-image" *ngIf="pokemon.collected" />
+</div>
+<img [src]="pokemon.image" />
+<div class="flex">
+  <button type="button" (click)="onCollected()">Add Pokémon</button>
+  <button type="button" (click)="onShowDetail()">Show Details</button>
+</div>

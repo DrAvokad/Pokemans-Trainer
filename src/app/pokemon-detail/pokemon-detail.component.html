@@ -1,4 +1,4 @@
-<div *ngIf="details !== null">
+<div *ngIf="details !== null" class="w-100">
   <div class="info-box">
     <ul>
       <h4>Abilities:</h4>
@@ -8,7 +8,7 @@
       <h4>Stats:</h4>
       <li *ngFor="let stat of details.stats">
         {{ stat.stat.name }}: {{ stat.base_stat}}
-      </li>,
+      </li>
     </ul>
     <button type="button" (click)="onClick()">Hide</button>
   </div>

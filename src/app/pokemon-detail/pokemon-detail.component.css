@@ -1,17 +1,20 @@
 .info-box {
   background-color: white;
   box-shadow: 0 0 5px 0 gray;
-  width: 200px;
+  width: 230px;
   padding-bottom: 5px;
   position: fixed;
-  margin-left: 30em;
+  right: 0;
 }
-.flex{
+main{
+  width: 100%;
+}
+.flex {
   display: flex;
   justify-content: left;
   align-items: center;
 }
-h4{
+h4 {
   font-size: 1.2rem;
   margin: 5px 0 5px -15px;
 }
