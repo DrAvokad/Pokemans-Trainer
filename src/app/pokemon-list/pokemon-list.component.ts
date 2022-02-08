@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ListItemDecorator } from '../models/list-item-decorator.model';
 import { Pokemon } from '../models/pokemon.model';
 
@@ -7,7 +7,7 @@ import { Pokemon } from '../models/pokemon.model';
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.css']
 })
-export class PokemonListComponent implements OnInit {
+export class PokemonListComponent implements OnChanges {
   @Input() pokemonsList: Pokemon[];
   @Input() decoratorType: "Trainer" | "Catalogue";
 
@@ -18,11 +18,11 @@ export class PokemonListComponent implements OnInit {
     this.pokemons = [];
     this.decoratorType = "Catalogue"
   }
-
-  ngOnInit(): void {
-    for(let pokemon of this.pokemonsList){
-      this.pokemons.push({"pokemon": pokemon, "decoratorType":this.decoratorType})
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+      this.pokemons = []
+      for(let pokemon of this.pokemonsList){
+        this.pokemons.push({"pokemon": pokemon, "decoratorType":this.decoratorType})
+      }
   }
 
 }
