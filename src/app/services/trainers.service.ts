@@ -51,7 +51,8 @@ export class TrainesService {
         .patch(`https://heroku-test-api-rasmus.herokuapp.com/trainers/${this.trainer?.id}`, this._trainer, {headers})
         .pipe(catchError(this.handleError<any>('addPokemon', [])))
         .subscribe(data =>{
-            localStorage.setItem(USER_KEY, JSON.stringify(data))
+            console.log(data)
+            //localStorage.setItem(USER_KEY, JSON.stringify(data))
         })
     }
 
@@ -63,6 +64,7 @@ export class TrainesService {
                     this._username = data[0].username;
                     //Store users object in local storage
                     localStorage.setItem(USER_KEY, JSON.stringify(data[0]));
+                    this._trainer = data[0]
                     this.router.navigateByUrl("/catalogue");
                 }
                 else {
@@ -85,6 +87,7 @@ export class TrainesService {
                 console.log("Created user: " + data.username)
                 //Store users object in local storage
                 localStorage.setItem(USER_KEY, JSON.stringify(data))
+                this._trainer = data
                 this.router.navigateByUrl("/catalogue");
             })
     }
