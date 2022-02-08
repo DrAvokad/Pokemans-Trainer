@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/DrAvokad/Pokemans-Trainer">
-    <img src="#" alt="Logo" width="80" height="80">
+    <img src="https://www.pinclipart.com/maxpin/iTwJoiJ/" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Pokemans trainer app</h3>
@@ -19,7 +19,7 @@
     <a href="#"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#">View Demo</a>
+    <a href="https://noroff-trainer-aar.herokuapp.com/">View Demo</a>
     ·
     <a href="https://github.com/DrAvokad/Pokemans-Trainer">Report Bug</a>
     ·
@@ -82,11 +82,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-### Assignment 2 - Hand sign translation
+### Assignment 3 - Pokémon Trainer app
 
 This is the third assignment for Noroff accelerated fullstack bootcamp.
-The assignment consists of creating a Single Page Application with the use of React.js, and any plugins related to it, that allows the user to translate sentences to hand sign letters and save the translations to an external API.
-
+The assignment consists of creating a Single Page Application with the use of Angular.js, and any plugins related to it, that allows the user to create a trainer and catch listed pokemons.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -139,7 +138,7 @@ Install [Nodejs](https://nodejs.org/en/) (LTS version recommended)
 
 #### OR
 
-Visit the deployed application on <a href="#">Heroku</a>
+Visit the deployed application on <a href="https://noroff-trainer-aar.herokuapp.com/">Heroku</a>
   
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
