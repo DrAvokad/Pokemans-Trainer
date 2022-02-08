@@ -6,7 +6,7 @@ import { Pokemon } from "../models/pokemon.model";
 import { Trainer } from "../models/trainer.model";
 
 //This is a reference to the user in the local state
-const USER_KEY = "trainer-username"
+export const USER_KEY = "trainer-username"
 @Injectable({
     providedIn: 'root'
 })
@@ -60,7 +60,12 @@ export class TrainesService {
 
     apiAddPokemonToTrainer(pokemon:Pokemon): void {
         const headers = this.createHeaders();
-        this.trainer?.pokemon.push(pokemon.name);
+        let object = {
+            name: pokemon.name,
+            id: pokemon.id
+        }
+        this.trainer?.pokemon.push(object);
+        console.log(object)
         this.http
         .patch(`https://heroku-test-api-rasmus.herokuapp.com/trainers/${this.trainer?.id}`, this._trainer, {headers})
         .pipe(catchError(this.handleError<any>('addPokemon', [])))
