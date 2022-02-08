@@ -11,6 +11,7 @@ export class PokemonListComponent implements OnChanges {
   @Input() pokemonsList: Pokemon[];
   @Input() decoratorType: "Trainer" | "Catalogue";
 
+  //List of all Pokemon combined with decorator type to determine which decorator component to render together with the Pokemon List Items
   pokemons: ListItemDecorator[];
 
   constructor() { 
@@ -22,7 +23,5 @@ export class PokemonListComponent implements OnChanges {
       this.pokemons = []
       for(let pokemon of this.pokemonsList){
         this.pokemons.push({"pokemon": pokemon, "decoratorType":this.decoratorType})
-      }
   }
-
 }

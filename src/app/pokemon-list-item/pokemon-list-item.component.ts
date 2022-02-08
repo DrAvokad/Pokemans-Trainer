@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ListItemDecorator } from '../models/list-item-decorator.model';
-import { Pokemon } from '../models/pokemon.model';
-import { API_KEY } from '../resources';
-import { TrainesService, USER_KEY } from '../services/trainers.service';
+import { TrainesService } from '../services/trainers.service';
 import { PokemonService } from '../services/pokemon.service';
 
 
@@ -14,6 +12,8 @@ import { PokemonService } from '../services/pokemon.service';
 export class PokemonListItemComponent implements OnInit {
   @Input() listDecorator: ListItemDecorator;
   @Input() index: number;
+
+  //Boolean to determine what decorator to render
   catalogue: Boolean = false
   trainer: Boolean = false
 
@@ -22,6 +22,7 @@ export class PokemonListItemComponent implements OnInit {
     this.index = 0;
   }
 
+  //Sets decorator boolean dempending on input
   ngOnInit(): void {
     if (this.listDecorator.decoratorType === "Catalogue") {
       this.catalogue = true;
@@ -30,12 +31,9 @@ export class PokemonListItemComponent implements OnInit {
     }
   }
 
-
-  handleCollected(): void{
-    this.listDecorator.pokemon.collected = true
-    this.trainerService.apiAddPokemonToTrainer(this.listDecorator.pokemon)
-  }
-    //May be deleted!
+  //Uses the emitted event to do either
+  //"collect": sets the collected boolean this list item's Pokemon object to true and pushes it to the user API
+  //"detail": sets the selected Pokemon in the Pokemon Service to the Pokemon of this list item
   handleDecoratorEvent(string: string): void {
     switch (string) {
       case 'collect':
@@ -43,12 +41,14 @@ export class PokemonListItemComponent implements OnInit {
         this.trainerService.apiAddPokemonToTrainer(this.listDecorator.pokemon);
         break;
       case 'detail':
-        this.pokemonService.selectedPokemon = this.listDecorator.pokemon
+        this.pokemonService.selectedPokemon = this.listDecorator.pokemon;
         this.pokemonService.apiGetPokemonDetails()
         break;
     }
 
   }
+
+  //Sets the collected boolean of this list item's Pokemon object to false and pushes it to the user API
   handleRemoved(): void{
     this.listDecorator.pokemon.collected = false
     this.trainerService.apiPatchPokemon(this.listDecorator.pokemon, this.index)
