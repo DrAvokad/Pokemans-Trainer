@@ -1,5 +1,6 @@
 <app-pokemon-catalogue 
     [collected]="listDecorator.pokemon.collected"
+    [pokemon] = "listDecorator.pokemon"
     (clicked)="handleCollected()"
     *ngIf="catalogue"></app-pokemon-catalogue>
 <app-pokemon-trainer *ngIf="trainer"
