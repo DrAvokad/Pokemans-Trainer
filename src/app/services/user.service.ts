@@ -11,7 +11,7 @@ import { Trainer } from '../models/trainer.model';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  private _user: Trainer = { id: -1, username: 'user', pokemon: [] };
+  private _user: Trainer = { id: -1, username: 'user', pokemon: [{name: "", id: 0}] };
 
   // Getters
   get user(): Trainer {

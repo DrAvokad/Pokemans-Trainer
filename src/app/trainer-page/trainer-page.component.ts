@@ -1,34 +1,49 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { PokemonDetails } from '../models/pokemon-details.model';
 import { PokemonService } from '../services/pokemon.service';
 import { Pokemon } from '../models/pokemon.model';
-
+import { Trainer } from '../models/trainer.model';
+import { TrainesService } from '../services/trainers.service';
+import { USER_KEY } from '../services/trainers.service';
+import { POKEMON_IMG_API } from '../resources';
 
 @Component({
   selector: 'app-trainer-page',
   templateUrl: './trainer-page.component.html',
-  styleUrls: ['./trainer-page.component.css']
+  styleUrls: ['./trainer-page.component.css'],
 })
 export class TrainerPageComponent implements OnInit {
-  constructor(private router: Router,
-    private pokemonService: PokemonService) {}
+  private _trainer: Trainer = {
+    id: 0,
+    username: '',
+    pokemon: [{ name: '', id: 0 }],
+  };
+  
+  private strObj: string | null = '';
+  private pokemon: Pokemon = { id: 0, name: 'Errormon', image: `${POKEMON_IMG_API}${0}.png`, collected: true };
+  constructor() {
+    if (localStorage.getItem(USER_KEY) !== null) {
+      this.strObj = localStorage.getItem(USER_KEY);
+      this._trainer = JSON.parse(this.strObj || '');
+    }
 
-  // get details(): PokemonDetails {
-  //   return this.pokemonService.details
-  // }
-  get pokemon(): Pokemon {
-    return this.pokemonService.pokemon
-  }
-  get pokemons(): Pokemon[] {
-    return this.pokemonService.pokemons
-  }
+  username: string = '';
+  pokemons: Pokemon[] = [];
 
   ngOnInit(): void {
-    // fetch user
-    this.pokemonService.apiGetPokemon(5);
-    this.pokemonService.apiGetPokemons(0, 20)
+  this.username = this._trainer.username;
+
+    for (let i = 0; i < this._trainer.pokemon.length; i++) {
+      this.pokemon = {
+        id: this._trainer.pokemon[i].id,
+        name: this._trainer.pokemon[i].name,
+        image: `${POKEMON_IMG_API}${this._trainer.pokemon[i].id}.png`,
+        collected: true,
+      };
+
+      this.pokemons.push(this.pokemon)
+    }
   }
-
-
 }
