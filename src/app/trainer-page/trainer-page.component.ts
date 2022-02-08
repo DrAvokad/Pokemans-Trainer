@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
-import { PokemonDetails } from '../models/pokemon-details.model';
-import { PokemonService } from '../services/pokemon.service';
 import { Pokemon } from '../models/pokemon.model';
 import { Trainer } from '../models/trainer.model';
-import { TrainesService } from '../services/trainers.service';
 import { USER_KEY } from '../services/trainers.service';
 import { POKEMON_IMG_API } from '../resources';
 
@@ -15,12 +11,12 @@ import { POKEMON_IMG_API } from '../resources';
   styleUrls: ['./trainer-page.component.css'],
 })
 export class TrainerPageComponent implements OnInit {
+
   private _trainer: Trainer = {
     id: 0,
     username: '',
     pokemon: [{ name: '', id: 0, image: "", collected: false }],
   };
-  
   private strObj: string | null = '';
   private pokemon: Pokemon = {
     id: 0,
@@ -28,6 +24,7 @@ export class TrainerPageComponent implements OnInit {
     image: `${POKEMON_IMG_API}${0}.png`,
     collected: true,
   };
+  // Get user from local storage
   constructor() {
     if (localStorage.getItem(USER_KEY) !== null) {
       this.strObj = localStorage.getItem(USER_KEY);
@@ -42,6 +39,7 @@ export class TrainerPageComponent implements OnInit {
     this.setPokemon();
   }
 
+  // Refresh pokemons from user
   setPokemon() {
     this.pokemons = [];
     for (let i = 0; i < this._trainer.pokemon.length; i++) {
