@@ -16,14 +16,13 @@ export class CataloguePageComponent implements OnInit {
   get pokemons(): Pokemon[] {
     return this.pokemonService.pokemons;
   }
+
   get username(): string {
     return this.trainerService.username;
   }
 
   ngOnInit(): void {
     this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
-    //test code
-    this.trainerService.apiGetTrainers();
   }
 
   handleLoadNext(): void {
@@ -39,6 +38,6 @@ export class CataloguePageComponent implements OnInit {
   }
 
   userFunction(): void {
-    console.log(this.trainerService.trainer)
+    console.log("trainer is: ", this.trainerService.trainer)
   }
 }
