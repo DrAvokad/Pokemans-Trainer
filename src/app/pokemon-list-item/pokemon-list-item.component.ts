@@ -3,6 +3,8 @@ import { ListItemDecorator } from '../models/list-item-decorator.model';
 import { Pokemon } from '../models/pokemon.model';
 import { API_KEY } from '../resources';
 import { TrainesService, USER_KEY } from '../services/trainers.service';
+import { PokemonService } from '../services/pokemon.service';
+
 
 @Component({
   selector: 'app-pokemon-list-item',
@@ -21,16 +23,31 @@ export class PokemonListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.listDecorator.decoratorType === "Catalogue"){
+    if (this.listDecorator.decoratorType === "Catalogue") {
       this.catalogue = true;
-    }else if(this.listDecorator.decoratorType === "Trainer"){
+    } else if (this.listDecorator.decoratorType === "Trainer") {
       this.trainer = true;
     }
   }
 
+
   handleCollected(): void{
     this.listDecorator.pokemon.collected = true
     this.trainerService.apiAddPokemonToTrainer(this.listDecorator.pokemon)
+
+    //May be deleted!
+  handleDecoratorEvent(string: string): void {
+    switch (string) {
+      case 'collect':
+        this.listDecorator.pokemon.collected = true
+        this.trainerService.apiAddPokemonToTrainer(this.listDecorator.pokemon);
+        break;
+      case 'detail':
+        this.pokemonService.selectedPokemon = this.listDecorator.pokemon
+        this.pokemonService.apiGetPokemonDetails()
+        break;
+    }
+
   }
   handleRemoved(): void{
     this.listDecorator.pokemon.collected = false

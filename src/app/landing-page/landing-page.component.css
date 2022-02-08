@@ -1,0 +1,37 @@
+
+h1 {
+    font-family: var(--font);
+    text-align: center;
+    font-size: 70pt;
+    text-shadow: 1px 1px #dd6d6d;
+    
+}
+
+input {
+    font-family: var(--fontSecond);
+    font-size: 60pt;
+    text-shadow: 1px 1px #dd6d6d;
+}
+
+button {
+    font-family: var(--fontSecond);
+    text-shadow: 1px 1px #dd6d6d;
+}
+form {
+    text-align: center;
+}
+
+#usernameErrors {
+    display: block;
+    color: #EC3B3B;
+    font-family: var(--fontSecond);
+    font-size: 20pt;
+}
+
+fieldset {
+    border: none;
+  }
+  
+  button {
+    font-size: 60pt;
+  }

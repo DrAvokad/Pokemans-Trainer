@@ -1,4 +1,4 @@
-<div *ngIf="btnToggle">
+<div *ngIf="details !== null">
   <div class="info-box">
     <ul>
       <h4>Abilities:</h4>
@@ -10,6 +10,6 @@
         {{ stat.stat.name }}: {{ stat.base_stat}}
       </li>,
     </ul>
+    <button type="button" (click)="onClick()">Hide</button>
   </div>
 </div>
-<button (click)="handleGetDetails()">{{ text }}</button>

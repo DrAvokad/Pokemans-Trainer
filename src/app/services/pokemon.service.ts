@@ -14,21 +14,23 @@ export class PokemonService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   private _pokemon: Pokemon = { id: 0, name: '', image: '', collected: false };
+  private _selectedPokemon: Pokemon = { "id": 0, "name": "Errormon", "image": "500", "collected": false }
   private _pokemons: Pokemon[] = [];
-  private _details: PokemonDetails = {
-    abilities: [{ ability: { name: '' } }, { ability: { name: '' } }],
-    stats: [
-      { base_stat: 0, stat: { name: 'hp' } },
-      { base_stat: 0, stat: { name: 'attack' } },
-      { base_stat: 0, stat: { name: 'defense' } },
-    ],
-  };
+  private _details: PokemonDetails | null = null
+  //  {
+  //   abilities: [{ ability: { name: '' } }, { ability: { name: '' } }],
+  //   stats: [
+  //     { base_stat: 0, stat: { name: 'hp' } },
+  //     { base_stat: 0, stat: { name: 'attack' } },
+  //     { base_stat: 0, stat: { name: 'defense' } },
+  //   ],
+  // };
 
   // Getters
-  get details(): PokemonDetails {
+  get details(): PokemonDetails | null {
     return this._details;
   }
   get pokemon(): Pokemon {
@@ -38,12 +40,25 @@ export class PokemonService {
     return this._pokemons;
   }
 
+  get selectedPokemon(): Pokemon {
+    return this._selectedPokemon;
+  }
+
+  // Setter
+  set selectedPokemon(pokeman: Pokemon) {
+    this._selectedPokemon = pokeman;
+  }
+
+  resetDetails(){
+    this._details = null
+  }
+
   // API requests
-  apiGetPokemonDetails(id: number): void {
+  apiGetPokemonDetails(): void{
     this.http
-      .get<PokemonDetails>(`${POKEMON_API}pokemon/${id}`)
+      .get<PokemonDetails>(`${POKEMON_API}pokemon/${this._selectedPokemon.id}`)
       .pipe(catchError(this.handleError<any>('getPokemonDetails ', [])))
-      .subscribe({  
+      .subscribe({
         next: (response: any) => {
           this._details = response
         }
@@ -53,46 +68,46 @@ export class PokemonService {
     this.http
       .get<Pokemon>(`${POKEMON_API}pokemon/${id}`)
       .pipe(catchError(this.handleError<any>('getPokemon', [])))
-      .subscribe({  
+      .subscribe({
         next: (response: any) => {
           this._pokemon = response
         }
       });
   }
   apiGetPokemonByName(name: string): Pokemon {
-    let pokemon = {"id":0,"name":"Errormon","image":"500","collected":false};
+    let pokemon = { "id": 0, "name": "Errormon", "image": "500", "collected": false };
     this.http
       .get<Pokemon>(`${POKEMON_API}pokemon/${name}`)
       .pipe(catchError(this.handleError<any>('getPokemon', [])))
-      .subscribe({  
+      .subscribe({
         next: (response: any) => {
           pokemon = response
         }
       });
-      return pokemon
+    return pokemon
   }
   apiGetPokemons(offset: number, limit: number): void {
     this._pokemons = []
     this.http.get<Pokemon[]>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
-    .pipe(catchError(this.handleError<any>('getPokemons', [])))
-    .subscribe({
-      next: (response) => {
-        for (let i = 0; i < limit; i++) {
-          let _id = offset + i + 1;
-          let _imageurl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${_id}.png`;
-          let pokemon = {
-            id: _id,
-            name: response.results[i].name,
-            image: _imageurl,
-            collected: false
+      .pipe(catchError(this.handleError<any>('getPokemons', [])))
+      .subscribe({
+        next: (response) => {
+          for (let i = 0; i < limit; i++) {
+            let _id = offset + i + 1;
+            let _imageurl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${_id}.png`;
+            let pokemon = {
+              id: _id,
+              name: response.results[i].name,
+              image: _imageurl,
+              collected: false
+            }
+            this.pokemons?.push(pokemon)
           }
-          this.pokemons?.push(pokemon)
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   // Log to message service

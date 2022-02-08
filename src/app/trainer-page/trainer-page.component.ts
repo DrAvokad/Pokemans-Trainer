@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
+import { Router } from '@angular/router';
+import { PokemonDetails } from '../models/pokemon-details.model';
 import { PokemonService } from '../services/pokemon.service';
 import { Pokemon } from '../models/pokemon.model';
 import { Trainer } from '../models/trainer.model';
@@ -17,6 +20,7 @@ export class TrainerPageComponent implements OnInit {
     username: '',
     pokemon: [{ name: '', id: 0, image: "", collected: false }],
   };
+  
   private strObj: string | null = '';
   private pokemon: Pokemon = {
     id: 0,
@@ -30,7 +34,6 @@ export class TrainerPageComponent implements OnInit {
       this._trainer = JSON.parse(this.strObj || '');
     }
   }
-
   username: string = '';
   pokemons: Pokemon[] = [];
 
