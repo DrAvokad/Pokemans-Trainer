@@ -2,7 +2,6 @@
     <h1>Landing page</h1>
     <form #loginForm="ngForm" (ngSubmit)="onLoginSubmit(loginForm)">
         <fieldset>
-            <label for="username">Username</label>
             <input type="text"
             ngModel
             #username="ngModel" 
@@ -25,5 +24,6 @@
         <button 
         [disabled]="loginForm.invalid"
         type="submit">Start</button>
+
     </form>
 </main>
