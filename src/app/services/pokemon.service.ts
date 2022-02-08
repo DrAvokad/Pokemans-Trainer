@@ -16,6 +16,7 @@ export class PokemonService {
     private messageService: MessageService
   ) { }
 
+  private POKEMON_SESSION_KEY: string = "offset:"
   private _pokemon: Pokemon = { id: 0, name: '', image: '', collected: false };
   private _selectedPokemon: Pokemon = { "id": 0, "name": "Errormon", "image": "500", "collected": false }
   private _pokemons: Pokemon[] = [];
@@ -54,6 +55,7 @@ export class PokemonService {
   }
 
   // API requests
+  // Http get request for pokemon details
   apiGetPokemonDetails(): void{
     this.http
       .get<PokemonDetails>(`${POKEMON_API}pokemon/${this._selectedPokemon.id}`)
@@ -64,6 +66,7 @@ export class PokemonService {
         }
       });
   }
+  // Http get request to fetch specific pokemon by id
   apiGetPokemon(id: number): void {
     this.http
       .get<Pokemon>(`${POKEMON_API}pokemon/${id}`)
@@ -74,6 +77,7 @@ export class PokemonService {
         }
       });
   }
+  // Http get request to fetch specific pokemon by name
   apiGetPokemonByName(name: string): Pokemon {
     let pokemon = { "id": 0, "name": "Errormon", "image": "500", "collected": false };
     this.http
@@ -86,12 +90,27 @@ export class PokemonService {
       });
     return pokemon
   }
+  // Push pokemons to pokemons getter from session storage
+  apiUpdateSession(index: number) {
+    console.log(this.POKEMON_SESSION_KEY+index)
+    let pokemans = JSON.parse(sessionStorage.getItem(this.POKEMON_SESSION_KEY+index) || "this should not be null")
+    for(let i = 0; i < pokemans.length; i++){
+      this._pokemons.push(pokemans[i])
+    } 
+  }
+  // Get pokemons from session storage if they exist, else fetch from API
   apiGetPokemons(offset: number, limit: number): void {
+    if(sessionStorage.getItem(this.POKEMON_SESSION_KEY+offset) !== null){
+     this._pokemons = []
+     this.apiUpdateSession(offset)
+     
+    }else{
     this._pokemons = []
     this.http.get<Pokemon[]>(`${POKEMON_API}pokemon?offset=${offset}&limit=${limit}`)
       .pipe(catchError(this.handleError<any>('getPokemons', [])))
       .subscribe({
         next: (response) => {
+          // Set image for every pokemon
           for (let i = 0; i < limit; i++) {
             let _id = offset + i + 1;
             let _imageurl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${_id}.png`;
@@ -103,11 +122,13 @@ export class PokemonService {
             }
             this.pokemons?.push(pokemon)
           }
+          sessionStorage.setItem(this.POKEMON_SESSION_KEY+offset, JSON.stringify(this._pokemons))
         },
         error: (error) => {
           console.log(error);
         },
       });
+    }
   }
 
   // Log to message service

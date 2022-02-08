@@ -30,20 +30,20 @@ export class CataloguePageComponent implements OnInit {
 
   //Fetches the first 20 Pokemon in the API from the Pokemon Service
   ngOnInit(): void {
-    this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
+    this.pokemonService.apiGetPokemons(this.loadingIndex, 20);
   }
 
   //Increases the index by 20 to fetch 20 new Pokemon from the Pokemon Service.
   handleLoadNext(): void {
     this.loadingIndex += 20;
-    this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20)
+    this.pokemonService.apiGetPokemons(this.loadingIndex, 20)
   }
 
   //Decreases the index by 20 to fetch the 20 pervious Pokemon from the Pokemon Service.
   handleLoadPrevious(): void {
     if (this.loadingIndex !== 0) {
       this.loadingIndex -= 20;
-      this.pokemonService.apiGetPokemons(this.loadingIndex, this.loadingIndex + 20);
+      this.pokemonService.apiGetPokemons(this.loadingIndex, 20);
     }
   }
 
