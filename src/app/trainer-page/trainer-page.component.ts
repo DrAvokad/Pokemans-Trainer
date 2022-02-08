@@ -18,11 +18,16 @@ export class TrainerPageComponent implements OnInit {
   private _trainer: Trainer = {
     id: 0,
     username: '',
-    pokemon: [{ name: '', id: 0 }],
+    pokemon: [{ name: '', id: 0, image: "", collected: false }],
   };
   
   private strObj: string | null = '';
-  private pokemon: Pokemon = { id: 0, name: 'Errormon', image: `${POKEMON_IMG_API}${0}.png`, collected: true };
+  private pokemon: Pokemon = {
+    id: 0,
+    name: 'Errormon',
+    image: `${POKEMON_IMG_API}${0}.png`,
+    collected: true,
+  };
   constructor() {
     if (localStorage.getItem(USER_KEY) !== null) {
       this.strObj = localStorage.getItem(USER_KEY);
@@ -33,17 +38,20 @@ export class TrainerPageComponent implements OnInit {
   pokemons: Pokemon[] = [];
 
   ngOnInit(): void {
-  this.username = this._trainer.username;
+    this.username = this._trainer.username;
+    this.setPokemon();
+  }
 
+  setPokemon() {
+    this.pokemons = [];
     for (let i = 0; i < this._trainer.pokemon.length; i++) {
-      this.pokemon = {
-        id: this._trainer.pokemon[i].id,
-        name: this._trainer.pokemon[i].name,
-        image: `${POKEMON_IMG_API}${this._trainer.pokemon[i].id}.png`,
-        collected: true,
-      };
-
-      this.pokemons.push(this.pokemon)
+        this.pokemon = {
+          id: this._trainer.pokemon[i].id,
+          name: this._trainer.pokemon[i].name,
+          image: this._trainer.pokemon[i].image,
+          collected: this._trainer.pokemon[i].collected,
+        };
+        this.pokemons.push(this.pokemon);
     }
   }
 }

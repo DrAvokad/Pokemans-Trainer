@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { catchError, Observable, of } from "rxjs";
 import { Pokemon } from "../models/pokemon.model";
 import { Trainer } from "../models/trainer.model";
+import { USER_API, POKEMON_IMG_API } from "../resources";
 
 //This is a reference to the user in the local state
 export const USER_KEY = "trainer-username"
@@ -49,14 +50,35 @@ export class TrainesService {
         const headers = this.createHeaders();
         let object = {
             name: pokemon.name,
-            id: pokemon.id
+            id: pokemon.id,
+            image: `${POKEMON_IMG_API}${pokemon.id}.png`,
+            collected: pokemon.collected
         }
         this.trainer?.pokemon.push(object);
-        console.log(object)
         this.http
         .patch(`https://heroku-test-api-rasmus.herokuapp.com/trainers/${this.trainer?.id}`, this._trainer, {headers})
         .pipe(catchError(this.handleError<any>('addPokemon', [])))
         .subscribe(data =>{
+            localStorage.setItem(USER_KEY, JSON.stringify(data))
+        })
+    }
+
+    apiPatchPokemon(pokemon:Pokemon, index: number): void {
+        const headers = this.createHeaders();
+        let pokemonObj = {
+            name: pokemon.name,
+            id: pokemon.id,
+            image: pokemon.image,
+            collected: pokemon.collected
+        }
+        if(this.trainer !== null) {
+            this.trainer.pokemon[index] = pokemonObj
+        }
+
+        this.http
+        .patch(`${USER_API}/${this.trainer?.id}`, this._trainer, {headers})
+        .subscribe(data => {
+            console.log(data)
             localStorage.setItem(USER_KEY, JSON.stringify(data))
         })
     }
