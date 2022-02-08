@@ -11,6 +11,7 @@ export class PokemonListComponent implements OnInit {
   @Input() pokemonsList: Pokemon[];
   @Input() decoratorType: "Trainer" | "Catalogue";
 
+  //List of all Pokemon combined with decorator type to determine which decorator component to render together with the Pokemon List Items
   pokemons: ListItemDecorator[];
 
   constructor() { 
@@ -19,6 +20,7 @@ export class PokemonListComponent implements OnInit {
     this.decoratorType = "Catalogue"
   }
 
+  //Populates the list of ListItemDecorators with ListItemDecorators with the appropriate type and pokemon
   ngOnInit(): void {
     for(let pokemon of this.pokemonsList){
       this.pokemons.push({"pokemon": pokemon, "decoratorType":this.decoratorType})

@@ -2,7 +2,7 @@
 <app-pokemon-catalogue 
     [collected]="listDecorator.pokemon.collected"
     [pokemon] = "listDecorator.pokemon"
-    (clicked)="handleCollected()"
+    (clicked)="handleDecoratorEvent($event)"
     *ngIf="catalogue"></app-pokemon-catalogue>
 <app-pokemon-trainer *ngIf="trainer"
     (rmClick)="handleRemoved()"
